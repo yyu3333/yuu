@@ -6,7 +6,7 @@ build/
 /captures
 .idea/
 *.iml
-repo/
-apk/
+# repo/
+# apk/
 gen
 generated-src/
