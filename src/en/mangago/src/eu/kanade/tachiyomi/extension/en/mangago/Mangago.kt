@@ -1,6 +1,3 @@
-// Trigger build
-package eu.kanade.tachiyomi.extension.en.mangago
-
 import android.app.Application
 import android.content.SharedPreferences
 import android.graphics.Bitmap
@@ -12,9 +9,6 @@ import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreferenceCompat
 import app.cash.quickjs.QuickJs
 import eu.kanade.tachiyomi.lib.randomua.addRandomUAPreferenceToScreen
-import eu.kanade.tachiyomi.lib.randomua.getPrefCustomUA
-import eu.kanade.tachiyomi.lib.randomua.getPrefUAType
-import eu.kanade.tachiyomi.lib.randomua.setRandomUserAgent
 import eu.kanade.tachiyomi.network.GET
 import eu.kanade.tachiyomi.network.interceptor.rateLimit
 import eu.kanade.tachiyomi.source.ConfigurableSource
