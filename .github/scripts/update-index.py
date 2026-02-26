@@ -19,7 +19,7 @@ extension_metadata = {
             {
                 "name": "Mangago",
                 "lang": "en",
-                "id": 2470059397662084186,
+                "id": "2470059397662084186",
                 "baseUrl": "https://www.mangago.me"
             }
         ]
@@ -41,4 +41,14 @@ index_min_data.sort(key=lambda x: x["pkg"])
 with (REPO_DIR / "index.min.json").open("w", encoding="utf-8") as f:
     json.dump(index_min_data, f, ensure_ascii=False, separators=(",", ":"))
 
-print(f"Updated index.min.json with {len(index_min_data)} entries.")
+repo_data = {
+    "meta": {
+        "name": "yyu3333",
+        "website": "https://github.com/yyu3333/yuu",
+    }
+}
+
+with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
+    json.dump(repo_data, f, indent=2)
+
+print(f"Updated index.min.json with {len(index_min_data)} entries and created repo.json.")
