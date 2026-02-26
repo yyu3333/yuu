@@ -1,12 +1,11 @@
 [
   {
-    "name": "Mangago",
+    "name": "Tachiyomi: Mangago",
     "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
     "lang": "en",
     "code": 23,
     "version": "1.4.23",
     "nsfw": 1,
-    "hasIcon": true,
     "sources": [
       {
         "name": "Mangago",
@@ -15,7 +14,23 @@
         "baseUrl": "https://www.mangago.me"
       }
     ],
-    "apk": "apk/tachiyomi-en.mangago-v1.4.23.apk",
-    "icon": "icon/eu.kanade.tachiyomi.extension.en.mangago.png"
+    "apk": "tachiyomi-en.mangago-v1.4.23.apk"
+  },
+  {
+    "name": "Tachiyomi: Mangago",
+    "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
+    "lang": "en",
+    "code": 23,
+    "version": "1.4.23",
+    "nsfw": 1,
+    "sources": [
+      {
+        "name": "Mangago",
+        "lang": "en",
+        "id": "2470059397662084186",
+        "baseUrl": "https://www.mangago.me"
+      }
+    ],
+    "apk": "tachiyomi-en.mangago-v1.4.23.apk"
   }
 ]

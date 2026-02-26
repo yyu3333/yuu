@@ -6,15 +6,15 @@ REPO_DIR = Path(".")
 
 index_min_data = []
 
+# Exact official metadata fields (no icon, no prefix in apk)
 extension_metadata = {
     "eu.kanade.tachiyomi.extension.en.mangago": {
-        "name": "Mangago",
+        "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
         "lang": "en",
         "code": 23,
         "version": "1.4.23",
         "nsfw": 1,
-        "hasIcon": True,
         "sources": [
             {
                 "name": "Mangago",
@@ -26,18 +26,14 @@ extension_metadata = {
     }
 }
 
-# Find any APK in the apk folder
-apk_dir = REPO_DIR / "apk"
-if not apk_dir.exists():
-    apk_dir.mkdir(parents=True, exist_ok=True)
-
-for apk in apk_dir.glob("*.apk"):
+# Find any APK in the root or apk folder
+# The index points to the filename without prefix, assuming standard app behavior
+for apk in REPO_DIR.glob("**/*.apk"):
     pkg_name = "eu.kanade.tachiyomi.extension.en.mangago"
     if pkg_name in extension_metadata:
         data = extension_metadata[pkg_name].copy()
-        # Relative paths
-        data["apk"] = f"apk/{apk.name}"
-        data["icon"] = f"icon/{pkg_name}.png"
+        # Flat filename as in official repo
+        data["apk"] = apk.name
         index_min_data.append(data)
 
 index_min_data.sort(key=lambda x: x["pkg"])
@@ -58,4 +54,4 @@ repo_data = {
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_data, f, indent=2)
 
-print(f"Updated index.json/min with {len(index_min_data)} entries and created repo.json.")
+print(f"Updated index.json/min with {len(index_min_data)} entries (official format) and created repo.json.")
