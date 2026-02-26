@@ -1,0 +1,384 @@
+﻿Build individual modules (0)	Set up job	´╗┐2026-02-26T02:32:50.7024969Z Current runner version: '2.331.0'
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7051062Z ##[group]Runner Image Provisioner
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7052781Z Hosted Compute Agent
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7053328Z Version: 20260213.493
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7053934Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7054632Z Build Date: 2026-02-13T00:28:41Z
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7055335Z Worker ID: {8822a961-8349-4182-b0fb-a8725b0f4e17}
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7055985Z Azure Region: northcentralus
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7056605Z ##[endgroup]
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7058416Z ##[group]Operating System
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7059006Z Ubuntu
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7059590Z 24.04.3
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7060072Z LTS
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7060534Z ##[endgroup]
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7061166Z ##[group]Runner Image
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7061803Z Image: ubuntu-24.04
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7062307Z Version: 20260224.36.1
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7063303Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260224.36/images/ubuntu/Ubuntu2404-Readme.md
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7065091Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260224.36
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7066026Z ##[endgroup]
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7067080Z ##[group]GITHUB_TOKEN Permissions
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7069215Z Contents: read
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7069913Z Metadata: read
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7070423Z Packages: read
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7071213Z ##[endgroup]
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7073651Z Secret source: Actions
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7074333Z Prepare workflow directory
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7482335Z Prepare all required actions
+Build individual modules (0)	Set up job	2026-02-26T02:32:50.7520529Z Getting action download info
+Build individual modules (0)	Set up job	2026-02-26T02:32:51.0973210Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+Build individual modules (0)	Set up job	2026-02-26T02:32:51.2378614Z Download action repository 'actions/setup-java@7a6d8a8234af8eb26422e24e3006232cccaa061b' (SHA:7a6d8a8234af8eb26422e24e3006232cccaa061b)
+Build individual modules (0)	Set up job	2026-02-26T02:32:51.7865216Z Download action repository 'gradle/actions@0bdd871935719febd78681f197cd39af5b6e16a6' (SHA:0bdd871935719febd78681f197cd39af5b6e16a6)
+Build individual modules (0)	Set up job	2026-02-26T02:32:52.8485088Z Download action repository 'actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b' (SHA:6f51ac03b9356f520e9adb1b1b7802705f340c2b)
+Build individual modules (0)	Set up job	2026-02-26T02:32:53.2636203Z Complete job name: Build individual modules (0)
+Build individual modules (0)	Checkout master branch	´╗┐2026-02-26T02:32:53.3246870Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3247743Z with:
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3247996Z   repository: yyu3333/yuu
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3248418Z   token: ***
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3248643Z   ssh-strict: true
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3248868Z   ssh-user: git
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3249110Z   persist-credentials: true
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3249383Z   clean: true
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3249623Z   sparse-checkout-cone-mode: true
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3249917Z   fetch-depth: 1
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3250138Z   fetch-tags: false
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3250380Z   show-progress: true
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3250616Z   lfs: false
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3251108Z   submodules: false
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3251355Z   set-safe-directory: true
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3251880Z env:
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3252102Z   CI_CHUNK_SIZE: 65
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.3252334Z ##[endgroup]
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4334543Z Syncing repository: yyu3333/yuu
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4335924Z ##[group]Getting Git version info
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4336413Z Working directory is '/home/runner/work/yuu/yuu'
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4336981Z [command]/usr/bin/git version
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4418557Z git version 2.53.0
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4444485Z ##[endgroup]
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4458373Z Temporarily overriding HOME='/home/runner/work/_temp/f1628def-ab3a-4c51-bac2-4e5dca36680f' before making global git config changes
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4459449Z Adding repository directory to the temporary git global config as a safe directory
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4464133Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yuu/yuu
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4511381Z Deleting the contents of '/home/runner/work/yuu/yuu'
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4515269Z ##[group]Initializing the repository
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4519115Z [command]/usr/bin/git init /home/runner/work/yuu/yuu
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4632089Z hint: Using 'master' as the name for the initial branch. This default branch name
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4633040Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4633628Z hint: to use in all of your new repositories, which will suppress this warning,
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4634051Z hint: call:
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4634252Z hint:
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4634578Z hint: 	git config --global init.defaultBranch <name>
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4634914Z hint:
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4635235Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4635759Z hint: 'development'. The just-created branch can be renamed via this command:
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4636520Z hint:
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4636902Z hint: 	git branch -m <name>
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4637396Z hint:
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4637849Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4638433Z Initialized empty Git repository in /home/runner/work/yuu/yuu/.git/
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4648292Z [command]/usr/bin/git remote add origin https://github.com/yyu3333/yuu
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4682280Z ##[endgroup]
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4682772Z ##[group]Disabling automatic garbage collection
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4686879Z [command]/usr/bin/git config --local gc.auto 0
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4714819Z ##[endgroup]
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4715247Z ##[group]Setting up auth
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4722284Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.4753116Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.5108551Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.5141134Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.5375876Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.5420027Z ##[endgroup]
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.5420715Z ##[group]Fetching the repository
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.5429222Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1327e4f31e80a482a851c12c7548ab6a439ee7d4:refs/remotes/origin/master
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.9533587Z From https://github.com/yyu3333/yuu
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.9534432Z  * [new ref]         1327e4f31e80a482a851c12c7548ab6a439ee7d4 -> origin/master
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.9567104Z ##[endgroup]
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.9567571Z ##[group]Determining the checkout info
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.9569957Z ##[endgroup]
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.9575168Z [command]/usr/bin/git sparse-checkout disable
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.9617322Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.9646754Z ##[group]Checking out the ref
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:53.9651454Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:54.0246491Z Reset branch 'master'
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:54.0248415Z branch 'master' set up to track 'origin/master'.
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:54.0255592Z ##[endgroup]
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:54.0295149Z [command]/usr/bin/git log -1 --format=%H
+Build individual modules (0)	Checkout master branch	2026-02-26T02:32:54.0319667Z 1327e4f31e80a482a851c12c7548ab6a439ee7d4
+Build individual modules (0)	Set up JDK	´╗┐2026-02-26T02:32:54.0624869Z ##[group]Run actions/setup-java@7a6d8a8234af8eb26422e24e3006232cccaa061b
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0625346Z with:
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0625554Z   java-version: 17
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0625796Z   distribution: temurin
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0626033Z   java-package: jdk
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0626270Z   check-latest: false
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0626657Z   server-id: github
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0626886Z   server-username: GITHUB_ACTOR
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0627165Z   server-password: GITHUB_TOKEN
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0627424Z   overwrite-settings: true
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0627669Z   job-status: success
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0628044Z   token: ***
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0628257Z env:
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0628445Z   CI_CHUNK_SIZE: 65
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.0628664Z ##[endgroup]
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2522187Z ##[group]Installed distributions
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2738825Z Resolved Java 17.0.18+8 from tool-cache
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2739526Z Setting Java 17.0.18+8 as the default
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2753797Z Creating toolchains.xml for JDK version 17 from temurin
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2829381Z Writing to /home/runner/.m2/toolchains.xml
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2829916Z 
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2830127Z Java configuration:
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2831301Z   Distribution: temurin
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2831861Z   Version: 17.0.18+8
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2832605Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.18-8/x64
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2833270Z 
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2833883Z ##[endgroup]
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2851966Z Creating settings.xml with server-id: github
+Build individual modules (0)	Set up JDK	2026-02-26T02:32:54.2855910Z Writing to /home/runner/.m2/settings.xml
+Build individual modules (0)	Prepare signing key	´╗┐2026-02-26T02:32:54.2965392Z ##[group]Run echo  | base64 -d > signingkey.jks
+Build individual modules (0)	Prepare signing key	2026-02-26T02:32:54.2965882Z [36;1mecho  | base64 -d > signingkey.jks[0m
+Build individual modules (0)	Prepare signing key	2026-02-26T02:32:54.3019320Z shell: /usr/bin/bash -e {0}
+Build individual modules (0)	Prepare signing key	2026-02-26T02:32:54.3019633Z env:
+Build individual modules (0)	Prepare signing key	2026-02-26T02:32:54.3019846Z   CI_CHUNK_SIZE: 65
+Build individual modules (0)	Prepare signing key	2026-02-26T02:32:54.3020209Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.18-8/x64
+Build individual modules (0)	Prepare signing key	2026-02-26T02:32:54.3020746Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.18-8/x64
+Build individual modules (0)	Prepare signing key	2026-02-26T02:32:54.3021435Z ##[endgroup]
+Build individual modules (0)	Set up Gradle	´╗┐2026-02-26T02:32:54.3305694Z ##[group]Run gradle/actions/setup-gradle@0bdd871935719febd78681f197cd39af5b6e16a6
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3306186Z with:
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3306400Z   cache-read-only: false
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3306675Z   cache-disabled: false
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3306924Z   cache-write-only: false
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3307198Z   cache-overwrite-existing: false
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3307482Z   cache-cleanup: on-success
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3307793Z   gradle-home-cache-includes: caches
+Build individual modules (0)	Set up Gradle	notifications
+Build individual modules (0)	Set up Gradle	
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3308143Z   add-job-summary: always
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3308419Z   add-job-summary-as-pr-comment: never
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3308732Z   dependency-graph: disabled
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3309060Z   dependency-graph-report-dir: dependency-graph-reports
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3309449Z   dependency-graph-continue-on-failure: true
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3309770Z   build-scan-publish: false
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3310040Z   validate-wrappers: true
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3310299Z   allow-snapshot-wrappers: false
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3310596Z   gradle-home-cache-strict-match: false
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3311082Z   workflow-job-context: {
+Build individual modules (0)	Set up Gradle	  "chunk": 0
+Build individual modules (0)	Set up Gradle	}
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3311544Z   github-token: ***
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3311772Z env:
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3311975Z   CI_CHUNK_SIZE: 65
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3312316Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.18-8/x64
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3312831Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.18-8/x64
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:54.3313225Z ##[endgroup]
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:55.6820277Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:55.6822689Z Preparing cache for cleanup.
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:55.6826227Z ##[group]Restore Gradle state from cache
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:55.8124845Z Cache hit for: gradle-home-v1|Linux-X64|build_individual[5ec0651014b3ddcb7a15cd2df220559a]-1327e4f31e80a482a851c12c7548ab6a439ee7d4
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.2210026Z Received 1612507 of 1612507 (100.0%), 5.5 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.2212239Z Cache Size: ~2 MB (1612507 B)
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.2243919Z [command]/usr/bin/tar -xf /home/runner/work/_temp/7adcb2f0-675e-41e3-aebd-f43c55be04fb/cache.tzst -P -C /home/runner/work/yuu/yuu --use-compress-program unzstd
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.2984701Z Cache restored successfully
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.2994172Z Restored cache entry with key gradle-home-v1|Linux-X64|build_individual[5ec0651014b3ddcb7a15cd2df220559a]-1327e4f31e80a482a851c12c7548ab6a439ee7d4 to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 616ms
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.4001585Z Cache hit for: gradle-instrumented-jars-v1-225f387f739deafaf9cbc53d8849a7af
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.4058064Z Cache hit for: gradle-kotlin-dsl-v1-16e75f569f017fc5d5d6ada18defc658
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.4086534Z Cache hit for: gradle-transforms-v1-695315528493dbdf272b8d480352fec1
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.4111757Z Cache hit for: gradle-groovy-dsl-v1-13ec0cbd2fdeebc0133bb3c327f5e004
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.4137409Z Cache hit for: gradle-generated-gradle-jars-v1-162ec066fc0a1bae82804bbc69cfff33
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.4193655Z Cache hit for: gradle-dependencies-v1-7ad6d28fdbacfd64c9aa3ebc8bba7bba
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.4256370Z Cache hit for: gradle-wrapper-zips-v1-c3a078940a5ca7b83357239a46024f48
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.6032402Z Received 140727 of 140727 (100.0%), 1.1 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.6038143Z Cache Size: ~0 MB (140727 B)
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.6739012Z Received 130010 of 130010 (100.0%), 0.9 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.6741329Z Cache Size: ~0 MB (130010 B)
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.6809053Z Received 218737 of 218737 (100.0%), 1.3 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.6809737Z Cache Size: ~0 MB (218737 B)
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.7457806Z [command]/usr/bin/tar -xf /home/runner/work/_temp/4e8e2862-8373-46e5-9913-b5a48c272aca/cache.tzst -P -C /home/runner/work/yuu/yuu --use-compress-program unzstd
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.7663941Z [command]/usr/bin/tar -xf /home/runner/work/_temp/92ff77ce-7426-4e29-b907-81cc2880dac3/cache.tzst -P -C /home/runner/work/yuu/yuu --use-compress-program unzstd
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.7727346Z Cache restored successfully
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.7732103Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c8da74b2-86d2-48d1-b2ad-5432a3759ba0/cache.tzst -P -C /home/runner/work/yuu/yuu --use-compress-program unzstd
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.7771397Z Restored cache entry with key gradle-instrumented-jars-v1-225f387f739deafaf9cbc53d8849a7af to /home/runner/.gradle/caches/jars-*/*/ in 476ms
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.8600472Z Cache restored successfully
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.8813929Z Restored cache entry with key gradle-groovy-dsl-v1-13ec0cbd2fdeebc0133bb3c327f5e004 to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 580ms
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.8898508Z Cache restored successfully
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:56.8961768Z Restored cache entry with key gradle-kotlin-dsl-v1-16e75f569f017fc5d5d6ada18defc658 to /home/runner/.gradle/caches/*/kotlin-dsl/accessors/*/,/home/runner/.gradle/caches/*/kotlin-dsl/scripts/*/ in 594ms
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:57.2068162Z Received 41088550 of 41088550 (100.0%), 55.0 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:57.2068887Z Cache Size: ~39 MB (41088550 B)
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:57.3209450Z [command]/usr/bin/tar -xf /home/runner/work/_temp/ffd44039-d0d8-417f-ac18-0b328d5d9ccd/cache.tzst -P -C /home/runner/work/yuu/yuu --use-compress-program unzstd
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:57.5626887Z Received 79691776 of 146735871 (54.3%), 74.9 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:57.5954446Z Received 62914560 of 249147843 (25.3%), 58.8 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:57.6177834Z Received 62914560 of 136113007 (46.2%), 59.6 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:57.7189522Z Cache restored successfully
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:57.7462409Z Restored cache entry with key gradle-generated-gradle-jars-v1-162ec066fc0a1bae82804bbc69cfff33 to /home/runner/.gradle/caches/8.11.1/generated-gradle-jars/gradle-api-8.11.1.jar in 1446ms
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:58.0975208Z Received 146735871 of 146735871 (100.0%), 90.3 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:58.0975908Z Cache Size: ~140 MB (146735871 B)
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:58.1029682Z [command]/usr/bin/tar -xf /home/runner/work/_temp/ce6e16bc-21f6-48c3-8b43-578cf25c17a0/cache.tzst -P -C /home/runner/work/yuu/yuu --use-compress-program unzstd
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:58.3168323Z Received 136113007 of 136113007 (100.0%), 76.1 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:58.3169997Z Cache Size: ~130 MB (136113007 B)
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:58.3198192Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b7858895-6adf-4b83-b9c4-9a8ab0329543/cache.tzst -P -C /home/runner/work/yuu/yuu --use-compress-program unzstd
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:58.5962727Z Received 130023424 of 249147843 (52.2%), 61.4 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:58.6156019Z Cache restored successfully
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:58.6521156Z Restored cache entry with key gradle-wrapper-zips-v1-c3a078940a5ca7b83357239a46024f48 to /home/runner/.gradle/wrapper/dists/gradle-8.11.1-bin/bpt9gzteqjrbo1mjrsomdt32c in 2351ms
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:59.5196056Z Cache restored successfully
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:59.5472708Z Restored cache entry with key gradle-transforms-v1-695315528493dbdf272b8d480352fec1 to /home/runner/.gradle/caches/transforms-4/*/,/home/runner/.gradle/caches/*/transforms/*/ in 3245ms
+Build individual modules (0)	Set up Gradle	2026-02-26T02:32:59.6672277Z Received 134217728 of 249147843 (53.9%), 41.4 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:00.6639265Z Received 244953539 of 249147843 (98.3%), 57.1 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:00.7960099Z Received 249147843 of 249147843 (100.0%), 56.3 MBs/sec
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:00.7963086Z Cache Size: ~238 MB (249147843 B)
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:00.7995919Z [command]/usr/bin/tar -xf /home/runner/work/_temp/5fe06491-70de-4077-be28-e17e940822eb/cache.tzst -P -C /home/runner/work/yuu/yuu --use-compress-program unzstd
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:01.2425090Z Cache restored successfully
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:01.2942105Z Restored cache entry with key gradle-dependencies-v1-7ad6d28fdbacfd64c9aa3ebc8bba7bba to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 4994ms
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:01.3364898Z ##[endgroup]
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:01.3761607Z ##[group]All Gradle Wrapper jars are valid
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:01.3762732Z Ô£ô Found known Gradle Wrapper JAR files:
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:01.3763613Z   2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046 gradle/wrapper/gradle-wrapper.jar
+Build individual modules (0)	Set up Gradle	2026-02-26T02:33:01.3764979Z ##[endgroup]
+Build individual modules (0)	Build extensions (chunk 0)	´╗┐2026-02-26T02:33:01.3978997Z ##[group]Run ./gradlew -p src assembleDebug
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.3979361Z [36;1m./gradlew -p src assembleDebug[0m
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4028118Z shell: /usr/bin/bash -e {0}
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4028350Z env:
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4028510Z   CI_CHUNK_SIZE: 65
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4028826Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.18-8/x64
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4029317Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.18-8/x64
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4029711Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4029993Z   GRADLE_USER_HOME: /home/runner/.gradle
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4030258Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4030526Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4031120Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4031609Z   DEVELOCITY_AUTO_INJECTION_CUSTOM_VALUE: gradle-actions
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4031916Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4032194Z   CI_CHUNK_NUM: 0
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4032365Z   ALIAS: 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4032525Z   KEY_STORE_PASSWORD: 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4032720Z   KEY_PASSWORD: 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:01.4032886Z ##[endgroup]
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:03.0171387Z Starting a Gradle Daemon (subsequent builds will be faster)
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:05.5167656Z Configuration on demand is an incubating feature.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:13.1188805Z > Task :buildSrc:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:13.2177421Z > Task :buildSrc:generateExternalPluginSpecBuilders FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:13.2178200Z > Task :buildSrc:extractPrecompiledScriptPluginPlugins FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:13.2178866Z > Task :buildSrc:compilePluginsBlocks FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:13.6186824Z > Task :buildSrc:generatePrecompiledScriptPluginAccessors FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:13.6188138Z > Task :buildSrc:generateScriptPluginAdapters FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:14.2168542Z > Task :buildSrc:compileKotlin FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:14.3188306Z > Task :buildSrc:compileJava NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:14.3189247Z > Task :buildSrc:compileGroovy NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:14.3190257Z > Task :buildSrc:pluginDescriptors
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:14.3190708Z > Task :buildSrc:processResources
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:14.3192102Z > Task :buildSrc:classes
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:14.6169724Z > Task :buildSrc:jar
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:17.4167348Z 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:17.4167846Z > Configure project :src:en:mangago
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:17.4168643Z WARNING: The option setting 'android.enableBuildConfigAsBytecode=true' is experimental.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:17.4169407Z The current default is 'false'.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:19.9164739Z 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:19.9165738Z > Task :core:preBuild UP-TO-DATE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:19.9171303Z > Task :core:preDebugBuild UP-TO-DATE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:20.0166325Z > Task :core:generateDebugResources FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.6174019Z > Task :core:packageDebugResources FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.6174708Z > Task :core:parseDebugLocalResources FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.6175341Z > Task :core:generateDebugRFile FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.6175881Z > Task :core:javaPreCompileDebug FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.6176466Z > Task :core:compileDebugJavaWithJavac NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.7208428Z > Task :core:compileDebugLibraryResources FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.7213873Z > Task :core:bundleLibCompileToJarDebug
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.8165901Z > Task :core:extractDeepLinksDebug FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.8171396Z > Task :core:writeDebugAarMetadata
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.8176024Z > Task :core:processDebugManifest FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:22.8180676Z > Task :core:generateDebugAssets UP-TO-DATE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.0202234Z > Task :core:packageDebugAssets
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.1165968Z > Task :core:processDebugJavaRes NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.1166732Z > Task :core:bundleLibRuntimeToJarDebug
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.1170453Z > Task :core:mergeDebugJniLibFolders
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.1171442Z > Task :core:mergeDebugNativeLibs NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.1172686Z > Task :core:copyDebugJniLibsProjectOnly
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.3175236Z > Task :src:en:mangago:lintKotlinAndroidTest NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.3193588Z > Task :src:en:mangago:lintKotlinAndroidTestDebug NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.3198712Z > Task :src:en:mangago:lintKotlinAndroidTestRelease NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.3203720Z > Task :src:en:mangago:lintKotlinDebug NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7180009Z > Task :lib:randomua:compileDebugKotlin FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7184835Z > Task :lib:randomua:preBuild UP-TO-DATE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7185762Z > Task :lib:randomua:preDebugBuild UP-TO-DATE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7188741Z > Task :lib:cryptoaes:compileDebugKotlin FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7189750Z > Task :lib:cryptoaes:preBuild UP-TO-DATE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7198382Z > Task :lib:cryptoaes:preDebugBuild UP-TO-DATE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7199244Z > Task :lib:randomua:javaPreCompileDebug FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7200708Z > Task :lib:randomua:compileDebugJavaWithJavac NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7202901Z > Task :lib:cryptoaes:javaPreCompileDebug FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7205279Z > Task :lib:cryptoaes:compileDebugJavaWithJavac NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7206122Z > Task :lib:randomua:writeDebugAarMetadata
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7221617Z > Task :lib:randomua:generateDebugEmptyResourceFiles
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7222885Z > Task :lib:cryptoaes:writeDebugAarMetadata
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7223672Z > Task :lib:randomua:processDebugManifest FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7224401Z > Task :lib:randomua:generateDebugAssets UP-TO-DATE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7225161Z > Task :lib:randomua:bundleLibCompileToJarDebug
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7229379Z > Task :lib:cryptoaes:bundleLibCompileToJarDebug
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7231506Z > Task :lib:cryptoaes:generateDebugEmptyResourceFiles
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7232090Z > Task :lib:randomua:packageDebugAssets
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7232639Z > Task :lib:cryptoaes:processDebugManifest FROM-CACHE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7233222Z > Task :lib:randomua:bundleLibRuntimeToJarDebug
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.7233839Z > Task :lib:cryptoaes:generateDebugAssets UP-TO-DATE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.8175129Z > Task :lib:cryptoaes:packageDebugAssets
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.8176485Z > Task :lib:randomua:processDebugJavaRes
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.8179949Z > Task :lib:cryptoaes:bundleLibRuntimeToJarDebug
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.8181387Z > Task :lib:cryptoaes:processDebugJavaRes
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.8181943Z > Task :lib:randomua:mergeDebugJniLibFolders
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.8182483Z > Task :lib:randomua:mergeDebugNativeLibs NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.8183025Z > Task :lib:cryptoaes:mergeDebugJniLibFolders
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.8183573Z > Task :lib:cryptoaes:mergeDebugNativeLibs NO-SOURCE
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.8184131Z > Task :lib:randomua:copyDebugJniLibsProjectOnly
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:23.8184699Z > Task :lib:cryptoaes:copyDebugJniLibsProjectOnly
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.0166916Z 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.0168467Z > Task :src:en:mangago:lintKotlinMain FAILED
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.0203546Z /home/runner/work/yuu/yuu/src/en/mangago/src/eu/kanade/tachiyomi/extension/en/mangago/Mangago.kt:4:1: Lint error > [import-ordering] Imports must be ordered in lexicographic order without any empty lines in-between with "java", "javax", "kotlin" and aliases in the end
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1181571Z 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1182783Z [Incubating] Problems report is available at: file:///home/runner/work/yuu/yuu/build/reports/problems/problems-report.html
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1191851Z FAILURE: Build failed with an exception.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1192248Z 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1192405Z * What went wrong:
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1192892Z Execution failed for task ':src:en:mangago:lintKotlinMain'.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1193545Z > lintKotlinMain sources failed lint check
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1193896Z 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1194008Z * Try:
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1194659Z > Run with --stacktrace option to get the stack trace.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1195707Z > Run with --info or --debug option to get more log output.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1199634Z > Run with --scan to get full insights.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1200702Z > Get more help at https://help.gradle.org.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1201406Z 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1201557Z BUILD FAILED in 23s
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1203045Z 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1203502Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1204160Z 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1205034Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1205975Z 
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1206894Z For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.1208160Z 46 actionable tasks: 26 executed, 20 from cache
+Build individual modules (0)	Build extensions (chunk 0)	2026-02-26T02:33:25.5554832Z ##[error]Process completed with exit code 1.
+Build individual modules (0)	Post Set up Gradle	´╗┐2026-02-26T02:33:25.5725799Z Post job cleanup.
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:25.9068380Z In post-action step
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:25.9080685Z ##[group]Stopping Gradle daemons
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:25.9082599Z Stopping Gradle daemons for /home/runner/.gradle/wrapper/dists/gradle-8.11.1-bin/bpt9gzteqjrbo1mjrsomdt32c/gradle-8.11.1
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:25.9101276Z [command]/home/runner/.gradle/wrapper/dists/gradle-8.11.1-bin/bpt9gzteqjrbo1mjrsomdt32c/gradle-8.11.1/bin/gradle --stop
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:26.6266191Z Stopping Daemon(s)
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:26.6266797Z 1 Daemon stopped
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:26.6376667Z ##[endgroup]
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:26.6378507Z Not performing cache-cleanup due to build failure
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:26.6379324Z ##[group]Caching Gradle state
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:27.9570476Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/yuu/yuu --files-from manifest.txt --use-compress-program zstdmt
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:28.4845875Z Sent 1612310 of 1612310 (100.0%), 5.1 MBs/sec
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:28.6267065Z Saved cache entry with key gradle-home-v1|Linux-X64|build_individual[5ec0651014b3ddcb7a15cd2df220559a]-1327e4f31e80a482a851c12c7548ab6a439ee7d4 from /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 684ms
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:28.6268400Z ##[endgroup]
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:28.6274387Z Generating Job Summary
+Build individual modules (0)	Post Set up Gradle	2026-02-26T02:33:28.6288691Z Completed post-action step
+Build individual modules (0)	Post Set up JDK	´╗┐2026-02-26T02:33:28.6503827Z Post job cleanup.
+Build individual modules (0)	Post Checkout master branch	´╗┐2026-02-26T02:33:28.8223818Z Post job cleanup.
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:28.9550273Z [command]/usr/bin/git version
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:28.9593240Z git version 2.53.0
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:28.9637324Z Temporarily overriding HOME='/home/runner/work/_temp/7395a0e5-17fd-4d07-b181-2099b2fee50f' before making global git config changes
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:28.9639020Z Adding repository directory to the temporary git global config as a safe directory
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:28.9653918Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yuu/yuu
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:28.9694752Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:28.9731592Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:28.9993405Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:29.0023905Z http.https://github.com/.extraheader
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:29.0040549Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Build individual modules (0)	Post Checkout master branch	2026-02-26T02:33:29.0076973Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Build individual modules (0)	Complete job	´╗┐2026-02-26T02:33:29.0449403Z Cleaning up orphan processes
