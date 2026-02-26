@@ -1,3 +1,5 @@
+package eu.kanade.tachiyomi.extension.en.mangago
+
 import android.app.Application
 import android.content.SharedPreferences
 import android.graphics.Bitmap
