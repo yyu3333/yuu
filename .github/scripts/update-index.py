@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
 
-REPO_DIR = Path("repo")
-REPO_APK_DIR = REPO_DIR / "apk"
+# Root directory of the repo
+REPO_DIR = Path(".")
 
 index_min_data = []
 
@@ -26,13 +26,14 @@ extension_metadata = {
     }
 }
 
-for apk in REPO_APK_DIR.glob("*.apk"):
+# Find any APK in the root
+for apk in REPO_DIR.glob("*.apk"):
     pkg_name = "eu.kanade.tachiyomi.extension.en.mangago"
     if pkg_name in extension_metadata:
         data = extension_metadata[pkg_name].copy()
-        # Include 'apk/' prefix because APKs are in the apk/ subdirectory
-        data["apk"] = f"apk/{apk.name}"
-        data["icon"] = f"icon/{pkg_name}.png"
+        # Flat paths
+        data["apk"] = apk.name
+        data["icon"] = f"{pkg_name}.png"
         index_min_data.append(data)
 
 index_min_data.sort(key=lambda x: x["pkg"])

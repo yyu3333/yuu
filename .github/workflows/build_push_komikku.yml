@@ -116,6 +116,7 @@ jobs:
 
       - name: Create repo artifacts
         run: |
+          cp src/en/mangago/res/mipmap-xxhdpi/ic_launcher.png ./eu.kanade.tachiyomi.extension.en.mangago.png
           python ./.github/scripts/move-apks.py
           python ./.github/scripts/update-index.py
 
@@ -123,6 +124,6 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          git add repo/
+          git add .
           git commit -m "Update extensions repo [skip ci]" || echo "No changes to commit"
           git push origin master
