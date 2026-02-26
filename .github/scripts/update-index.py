@@ -4,9 +4,7 @@ from pathlib import Path
 # Root directory of the repo
 REPO_DIR = Path(".")
 
-index_min_data = []
-
-# Exact official metadata fields (no icon, no prefix in apk)
+# Exact official metadata fields
 extension_metadata = {
     "eu.kanade.tachiyomi.extension.en.mangago": {
         "name": "Tachiyomi: Mangago",
@@ -26,15 +24,13 @@ extension_metadata = {
     }
 }
 
-# Find any APK in the root or apk folder
-# The index points to the filename without prefix, assuming standard app behavior
-for apk in REPO_DIR.glob("**/*.apk"):
-    pkg_name = "eu.kanade.tachiyomi.extension.en.mangago"
-    if pkg_name in extension_metadata:
-        data = extension_metadata[pkg_name].copy()
-        # Flat filename as in official repo
-        data["apk"] = apk.name
-        index_min_data.append(data)
+index_min_data = []
+
+# Generate exactly one entry per extension
+for pkg_name, meta in extension_metadata.items():
+    data = meta.copy()
+    data["apk"] = f"tachiyomi-{meta['lang']}.{meta['sources'][0]['name'].lower()}-v{meta['version']}.apk"
+    index_min_data.append(data)
 
 index_min_data.sort(key=lambda x: x["pkg"])
 
