@@ -72,22 +72,18 @@ class Mangago :
     override val supportsLatest = true
 
     private val preferences: SharedPreferences by lazy {
-        Injekt.get<Application>().getSharedPreferences("source_8101438258276709849", 0x0000)
+        Injekt.get<Application>().getSharedPreferences("source_$id", 0x0000)
     }
 
     override val client = network.cloudflareClient.newBuilder()
         .rateLimit(1, 2)
-        .setRandomUserAgent(
-            preferences.getPrefUAType(),
-            preferences.getPrefCustomUA(),
-        )
         .addInterceptor { chain ->
             val request = chain.request()
-            if (request.header("User-Agent").isNullOrBlank()) {
-                val userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-                return@addInterceptor chain.proceed(request.newBuilder().header("User-Agent", userAgent).build())
-            }
-            chain.proceed(request)
+            val userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+            val newRequest = request.newBuilder()
+                .header("User-Agent", userAgent)
+                .build()
+            chain.proceed(newRequest)
         }
         .addInterceptor { chain ->
             val request = chain.request()
@@ -125,18 +121,18 @@ class Mangago :
 
     private val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH)
 
-    private fun mangaFromElement(element: Element) = SManga.create().apply {
+    private fun mangaFromElement(element: Element): SManga {
         val linkElement = element.selectFirst(".thm-effect")
             ?: element.selectFirst("a")
-            ?: throw Exception("Mangago: Could not find link element")
+            ?: return SManga.create().apply { title = "Error: Link missing" }
 
-        setUrlWithoutDomain(linkElement.attr("href"))
-        title = linkElement.attr("title").ifBlank { linkElement.text() }
+        return SManga.create().apply {
+            setUrlWithoutDomain(linkElement.attr("href"))
+            title = linkElement.attr("title").ifBlank { linkElement.text() }.ifBlank { "Untitled" }
 
-        val thumbnailElem = linkElement.selectFirst("img")
-            ?: element.selectFirst("img")
-
-        thumbnail_url = thumbnailElem?.attr("abs:data-src")?.ifBlank { thumbnailElem.attr("abs:src") } ?: ""
+            val thumbnailElem = linkElement.selectFirst("img") ?: element.selectFirst("img")
+            thumbnail_url = thumbnailElem?.attr("abs:data-src")?.ifBlank { thumbnailElem.attr("abs:src") } ?: ""
+        }
     }
 
     override fun popularMangaRequest(page: Int): Request = GET("$baseUrl/genre/all/$page/?f=1&o=1&sortby=view&e=", headers)
