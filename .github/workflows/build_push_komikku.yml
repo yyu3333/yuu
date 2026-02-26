@@ -85,7 +85,7 @@ jobs:
           ALIAS: ${{ secrets.ALIAS }}
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew -p src assembleRelease
+        run: ./gradlew -p src assembleDebug
 
       - name: Upload APKs (chunk ${{ matrix.chunk }})
         uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
@@ -102,7 +102,6 @@ jobs:
     name: Publish repo
     needs:
       - build_individual
-    if: github.repository == 'komikku-app/komikku-extensions'
     runs-on: ubuntu-latest
     steps:
       - name: Download APK artifacts
@@ -116,47 +115,25 @@ jobs:
           java-version: 17
           distribution: temurin
 
-      - name: Checkout ${{ github.ref_name }} branch
+      - name: Checkout master branch
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          ref: ${{ github.ref_name }}
-          path: ${{ github.ref_name }}
+          ref: master
 
       - name: Create repo artifacts
         run: |
-          cd ${{ github.ref_name }}
           python ./.github/scripts/move-apks.py
           INSPECTOR_LINK="$(curl -s "https://api.github.com/repos/keiyoushi/extensions-inspector/releases/latest" | jq -r '.assets[0].browser_download_url')"
           curl -L "$INSPECTOR_LINK" -o ./Inspector.jar
+          # Use a mock aapt if needed or just skip parts of create-repo that require ANDROID_HOME for local metadata
+          # Better: use the pre-built Inspector.jar which handles some of this
           java -jar ./Inspector.jar "repo/apk" "output.json" "tmp"
           python ./.github/scripts/create-repo.py
 
-      - name: Checkout repo branch
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          repository: komikku-app/extensions
-          token: ${{ secrets.BOT_PAT }}
-          ref: repo
-          path: repo
-
-      - name: Import GPG key
-        id: import-gpg
-        uses: crazy-max/ghaction-import-gpg@cb9bde2e2525e640591a934b1fd28eef1dcaf5e5 # v6
-        with:
-          workdir: repo
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
-
-      - name: GPG user IDs
+      - name: Commit and push changes
         run: |
-          echo "fingerprint: ${{ steps.import-gpg.outputs.fingerprint }}"
-          echo "keyid:       ${{ steps.import-gpg.outputs.keyid }}"
-          echo "name:        ${{ steps.import-gpg.outputs.name }}"
-          echo "email:       ${{ steps.import-gpg.outputs.email }}"
-
-      - name: Deploy repo
-        run: |
-          cd repo
-          ../${{ github.ref_name }}/.github/scripts/commit-repo.sh ../${{ github.ref_name }}/repo/
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add repo/
+          git commit -m "Update extensions repo [skip ci]" || echo "No changes to commit"
+          git push origin master
