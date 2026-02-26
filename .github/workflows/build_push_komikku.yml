@@ -65,9 +65,6 @@ jobs:
           java-version: 17
           distribution: temurin
 
-      - name: Prepare signing key
-        run: |
-          echo ${{ secrets.SIGNING_KEY }} | base64 -d > signingkey.jks
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@0bdd871935719febd78681f197cd39af5b6e16a6 # v4
@@ -77,10 +74,10 @@ jobs:
       - name: Build extensions (chunk ${{ matrix.chunk }})
         env:
           CI_CHUNK_NUM: ${{ matrix.chunk }}
-          ALIAS: ${{ secrets.ALIAS }}
-          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew -p src assembleDebug
+          ALIAS: "komikku"
+          KEY_STORE_PASSWORD: "komikku123"
+          KEY_PASSWORD: "komikku123"
+        run: ./gradlew -p src assembleRelease
 
       - name: Upload APKs (chunk ${{ matrix.chunk }})
         uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
@@ -89,8 +86,6 @@ jobs:
           path: "**/*.apk"
           retention-days: 1
 
-      - name: Clean up CI files
-        run: rm signingkey.jks
 
   publish_repo:
     name: Publish repo
@@ -128,6 +123,7 @@ jobs:
           cp master/src/en/mangago/res/mipmap-xxhdpi/ic_launcher.png repo/icon/eu.kanade.tachiyomi.extension.en.mangago.png
           cp master/.github/scripts/move-apks.py repo/.github/scripts/move-apks.py
           cp master/.github/scripts/update-index.py repo/.github/scripts/update-index.py
+          cp master/fingerprint.txt repo/fingerprint.txt
           cd repo
           python ./.github/scripts/move-apks.py
           python ./.github/scripts/update-index.py
