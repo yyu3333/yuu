@@ -26,20 +26,27 @@ extension_metadata = {
     }
 }
 
-# Find any APK in the root
-for apk in REPO_DIR.glob("*.apk"):
+# Find any APK in the apk folder
+apk_dir = REPO_DIR / "apk"
+if not apk_dir.exists():
+    apk_dir.mkdir(parents=True, exist_ok=True)
+
+for apk in apk_dir.glob("*.apk"):
     pkg_name = "eu.kanade.tachiyomi.extension.en.mangago"
     if pkg_name in extension_metadata:
         data = extension_metadata[pkg_name].copy()
-        # Flat paths
-        data["apk"] = apk.name
-        data["icon"] = f"{pkg_name}.png"
+        # Relative paths
+        data["apk"] = f"apk/{apk.name}"
+        data["icon"] = f"icon/{pkg_name}.png"
         index_min_data.append(data)
 
 index_min_data.sort(key=lambda x: x["pkg"])
 
 with (REPO_DIR / "index.min.json").open("w", encoding="utf-8") as f:
     json.dump(index_min_data, f, ensure_ascii=False, separators=(",", ":"))
+
+with (REPO_DIR / "index.json").open("w", encoding="utf-8") as f:
+    json.dump(index_min_data, f, indent=2)
 
 repo_data = {
     "meta": {
@@ -51,4 +58,4 @@ repo_data = {
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_data, f, indent=2)
 
-print(f"Updated index.min.json with {len(index_min_data)} entries and created repo.json.")
+print(f"Updated index.json/min with {len(index_min_data)} entries and created repo.json.")
