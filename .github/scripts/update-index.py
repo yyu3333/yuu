@@ -51,6 +51,11 @@ repo_data = {
     }
 }
 
+fingerprint_file = REPO_DIR / "fingerprint.txt"
+if fingerprint_file.exists():
+    with fingerprint_file.open("r", encoding="utf-8") as f:
+        repo_data["meta"]["signingKeyFingerprint"] = f.readline().strip()
+
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_data, f, indent=2)
 
