@@ -1,3 +1,4 @@
+// Trigger build
 package eu.kanade.tachiyomi.extension.en.mangago
 
 import android.content.SharedPreferences
