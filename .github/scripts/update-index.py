@@ -19,7 +19,7 @@ extension_metadata = {
             {
                 "name": "Mangago",
                 "lang": "en",
-                "id": 8101438258276709849,
+                "id": 2470059397662084186,
                 "baseUrl": "https://www.mangago.me"
             }
         ]
