@@ -113,17 +113,30 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           ref: master
+          path: master
+
+      - name: Checkout repo branch
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          ref: repo
+          path: repo
 
       - name: Create repo artifacts
         run: |
-          cp src/en/mangago/res/mipmap-xxhdpi/ic_launcher.png ./eu.kanade.tachiyomi.extension.en.mangago.png
+          mkdir -p repo/icon
+          mkdir -p repo/apk
+          cp master/src/en/mangago/res/mipmap-xxhdpi/ic_launcher.png repo/icon/eu.kanade.tachiyomi.extension.en.mangago.png
+          cp master/.github/scripts/move-apks.py repo/.github/scripts/move-apks.py
+          cp master/.github/scripts/update-index.py repo/.github/scripts/update-index.py
+          cd repo
           python ./.github/scripts/move-apks.py
           python ./.github/scripts/update-index.py
 
       - name: Commit and push changes
         run: |
+          cd repo
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git add .
           git commit -m "Update extensions repo [skip ci]" || echo "No changes to commit"
-          git push origin master
+          git push origin repo
