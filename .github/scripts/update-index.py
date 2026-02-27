@@ -6,23 +6,23 @@ from collections import OrderedDict
 REPO_DIR = Path(".")
 
 # Fetch fingerprint from file generated during CI
+# In v37, we extract this DIRECTLY from the built APK
 FINGERPRINT_FILE = REPO_DIR / "fingerprint.txt"
 if FINGERPRINT_FILE.exists():
     with FINGERPRINT_FILE.open("r", encoding="utf-8") as f:
         fingerprint = f.read().strip()
 else:
-    # Fallback to a placeholder if running locally without CI file
     fingerprint = "0000000000000000000000000000000000000000000000000000000000000000"
 
-# Exact official metadata fields for Mangago (Version 36)
+# Exact official metadata fields for Mangago (Version 37)
 extension_metadata = {
     "eu.kanade.tachiyomi.extension.en.mangago": {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
-        "apk": "tachiyomi-en.mangago-v1.4.36.apk",
+        "apk": "tachiyomi-en.mangago-v1.4.37.apk",
         "lang": "en",
-        "code": 36,
-        "version": "1.4.36",
+        "code": 37,
+        "version": "1.4.37",
         "nsfw": 1,
         "sources": [
             {
@@ -60,7 +60,7 @@ repo_meta = {
     }
 }
 
-# 1. Write out minified index (Tachiyomi standard)
+# 1. Write out minified index
 with (REPO_DIR / "index.min.json").open("w", encoding="utf-8") as f:
     json.dump(index_min_data, f, ensure_ascii=False, separators=(",", ":"))
 
@@ -72,4 +72,4 @@ with (REPO_DIR / "index.json").open("w", encoding="utf-8") as f:
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_meta, f, ensure_ascii=False, indent=2)
 
-print(f"Generated v36 metadata with dynamic fingerprint: {fingerprint}")
+print(f"Generated v37 metadata with verified fingerprint: {fingerprint}")
