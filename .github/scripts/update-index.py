@@ -12,21 +12,28 @@ print(f"Updating index in: {REPO_DIR.absolute()}")
 # In CI, REPO_DIR is 'repo' branch, and 'master' is sibling
 build_gradle = REPO_DIR.parent / "master" / "src" / "en" / "mangago" / "build.gradle"
 version_code = 43
+print(f"Checking for build.gradle at: {build_gradle.absolute()}")
 if build_gradle.exists():
+    print("Found build.gradle")
     with build_gradle.open("r", encoding="utf-8") as f:
         for line in f:
             if "extVersionCode =" in line:
                 version_code = int(line.split("=")[1].strip())
                 break
 else:
+    print("build.gradle NOT found at sibling path")
     # Local dev path fallback
     build_gradle = REPO_DIR / "src" / "en" / "mangago" / "build.gradle"
+    print(f"Checking fallback path: {build_gradle.absolute()}")
     if build_gradle.exists():
+        print("Found build.gradle at fallback path")
         with build_gradle.open("r", encoding="utf-8") as f:
             for line in f:
                 if "extVersionCode =" in line:
                     version_code = int(line.split("=")[1].strip())
                     break
+    else:
+        print("CRITICAL: build.gradle NOT found anywhere")
 
 current_version = f"1.4.{version_code}"
 apk_name = f"tachiyomi-en.mangago-v{current_version}.apk"

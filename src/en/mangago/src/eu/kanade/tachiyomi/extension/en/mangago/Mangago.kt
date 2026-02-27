@@ -325,12 +325,16 @@ class Mangago :
 
     private fun mergeUrlWithTemplate(urlPath: String, template: String): String {
         // urlPath: /read-manga/name/uu/br/pg-1/
-        // template: uu/b/pg-{page}/
+        // template: https://www.mangago.me/read-manga/name/uu/b/pg-{page}/ OR uu/b/pg-{page}/
+
+        // Normalize template to path if it's a full URL
+        val cleanTemplate = runCatching { template.toHttpUrl().encodedPath }.getOrDefault(template)
+
         val currentUu = MATCH_UU_SEGMENT.find(urlPath)?.value ?: ""
         val correctedTemplate = if (currentUu.isNotEmpty()) {
-            template.replace(MATCH_UU_SEGMENT, currentUu)
+            cleanTemplate.replace(MATCH_UU_SEGMENT, currentUu)
         } else {
-            template
+            cleanTemplate
         }
 
         // Find where uu/ starts in the current url to determine prefix
@@ -341,10 +345,12 @@ class Mangago :
             ""
         }
 
+        val relativeTemplate = correctedTemplate.removePrefix("/")
+
         return if (prefix.isNotEmpty()) {
-            "$prefix/${correctedTemplate.removePrefix("/")}"
+            "$prefix/$relativeTemplate"
         } else {
-            "/" + correctedTemplate.removePrefix("/")
+            "/$relativeTemplate"
         }
     }
 
