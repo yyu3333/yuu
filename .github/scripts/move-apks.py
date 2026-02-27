@@ -12,7 +12,7 @@ apk_dir.mkdir(parents=True, exist_ok=True)
 for apk in (Path.home() / "apk-artifacts").glob("**/*.apk"):
     # Align naming with update-index.py
     if "mangago" in apk.name.lower():
-        apk_name = "tachiyomi-en.mangago-v1.4.41.apk"
+        apk_name = "tachiyomi-en.mangago-v1.4.42.apk"
     else:
         apk_name = apk.name.replace("-release-unsigned.apk", ".apk").replace("-release.apk", ".apk").replace("-debug.apk", ".apk")
     shutil.move(apk, apk_dir / apk_name)
