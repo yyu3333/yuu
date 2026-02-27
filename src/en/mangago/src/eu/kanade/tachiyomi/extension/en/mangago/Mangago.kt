@@ -269,8 +269,11 @@ class Mangago :
         val pattern = Regex.escape(cleanTemplate.replace("{page}", "{P}"))
             .replace("\\{P\\}", "(\\d+)")
             .let {
-                if (it.startsWith("uu/")) it.replaceFirst(Regex("^uu/[^/]+/"), "uu/[^/]+/")
-                else it
+                if (it.startsWith("uu/")) {
+                    it.replaceFirst(Regex("^uu/[^/]+/"), "uu/[^/]+/")
+                } else {
+                    it
+                }
             }
 
         val curlPattern = runCatching { Regex(pattern) }.getOrNull()
