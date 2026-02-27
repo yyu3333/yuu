@@ -13,15 +13,15 @@ if FINGERPRINT_FILE.exists():
 else:
     fingerprint = "0000000000000000000000000000000000000000000000000000000000000000"
 
-# Exact official metadata fields for Mangago (Version 40)
+# Exact official metadata fields for Mangago (Version 41)
 extension_metadata = {
     "eu.kanade.tachiyomi.extension.en.mangago": {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
-        "apk": "tachiyomi-en.mangago-v1.4.40.apk",
+        "apk": "tachiyomi-en.mangago-v1.4.41.apk",
         "lang": "en",
-        "code": 40,
-        "version": "1.4.40",
+        "code": 41,
+        "version": "1.4.41",
         "nsfw": 1,
         "sources": [
             {
@@ -71,4 +71,4 @@ with (REPO_DIR / "index.json").open("w", encoding="utf-8") as f:
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_meta, f, ensure_ascii=False, indent=2)
 
-print(f"Generated v40 metadata with confirmed fingerprint: {fingerprint}")
+print(f"Generated v41 metadata with confirmed fingerprint: {fingerprint}")
