@@ -263,9 +263,11 @@ class Mangago :
         val baseUrl = document.location().toHttpUrl()
         val sourcePath = baseUrl.encodedPath
 
-        val cleanTemplate = pageURLTemplate.removePrefix("/")
+        val cleanTemplate = runCatching { pageURLTemplate.toHttpUrl().encodedPath }.getOrDefault(pageURLTemplate)
+            .removePrefix("/")
 
         // Synchronize legacy uu/b or uu/t templates with the active path (br, to, nml, etc)
+        // We use IGNORE_CASE to handle site differences, and ensure the pattern works for paths
         val pattern = Regex.escape(cleanTemplate.replace("{page}", "{P}"))
             .replace("\\{P\\}", "(\\d+)")
             .let {
@@ -276,7 +278,7 @@ class Mangago :
                 }
             }
 
-        val curlPattern = runCatching { Regex(pattern) }.getOrNull()
+        val curlPattern = runCatching { Regex(pattern, RegexOption.IGNORE_CASE) }.getOrNull()
         val match = curlPattern?.find(sourcePath)
 
         val prefix = if (match != null) {
@@ -309,7 +311,10 @@ class Mangago :
         }
 
         // Gets the first array of image URLs from the base chapter URL
-        val firstUrls = getChapterImageUrls(document)
+        val firstUrls = runCatching { getChapterImageUrls(document) }.getOrElse {
+            val debugMsg = "Template: '$pageURLTemplate', Match: ${match != null}, Pattern: '$pattern', Source: '$sourcePath'"
+            throw Exception("${it.message} [$debugMsg]")
+        }
         if (firstUrls.isEmpty()) {
             throw Exception("Mangago: pageListParse failed - decoded image url list is empty")
         }
