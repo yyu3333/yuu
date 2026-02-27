@@ -6,7 +6,7 @@ from collections import OrderedDict
 REPO_DIR = Path(".")
 
 # Fetch fingerprint from file generated during CI
-# In v37, we extract this DIRECTLY from the built APK
+# In v38, we extract this DIRECTLY from the built APK
 FINGERPRINT_FILE = REPO_DIR / "fingerprint.txt"
 if FINGERPRINT_FILE.exists():
     with FINGERPRINT_FILE.open("r", encoding="utf-8") as f:
@@ -14,15 +14,15 @@ if FINGERPRINT_FILE.exists():
 else:
     fingerprint = "0000000000000000000000000000000000000000000000000000000000000000"
 
-# Exact official metadata fields for Mangago (Version 37)
+# Exact official metadata fields for Mangago (Version 38)
 extension_metadata = {
     "eu.kanade.tachiyomi.extension.en.mangago": {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
-        "apk": "tachiyomi-en.mangago-v1.4.37.apk",
+        "apk": "tachiyomi-en.mangago-v1.4.38.apk",
         "lang": "en",
-        "code": 37,
-        "version": "1.4.37",
+        "code": 38,
+        "version": "1.4.38",
         "nsfw": 1,
         "sources": [
             {
@@ -72,4 +72,4 @@ with (REPO_DIR / "index.json").open("w", encoding="utf-8") as f:
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_meta, f, ensure_ascii=False, indent=2)
 
-print(f"Generated v37 metadata with verified fingerprint: {fingerprint}")
+print(f"Generated v38 metadata with dynamic fingerprint: {fingerprint}")

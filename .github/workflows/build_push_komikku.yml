@@ -126,13 +126,14 @@ jobs:
       - name: Extract Fingerprint
         run: |
           mkdir -p repo
-          # Extract from the first APK found in artifacts (Mangago)
-          APK_PATH=$(find ~/apk-artifacts -name "tachiyomi-en.mangago-v1.4.37.apk" | head -n 1)
-          if [ -n "$APK_PATH" ]; then
+          # Extract from the first APK found in artifacts that looks like Mangago
+          APK_PATH=$(find ~/apk-artifacts -name "*mangago*.apk" | head -n 1)
+          if [ -n "$APK_PATH" ] && [ -f "$APK_PATH" ]; then
+            echo "Found APK: $APK_PATH"
             python master/check_sig_v4.py "$APK_PATH" | grep "SHA-256 Fingerprint:" | cut -d ' ' -f 3 > repo/fingerprint.txt
             echo "Extracted Fingerprint from APK: $(cat repo/fingerprint.txt)"
           else
-            echo "Mangago APK not found, falling back to JKS extraction"
+            echo "Mangago APK not found at $APK_PATH, falling back to JKS extraction"
             keytool -list -v -keystore master/signingkey.jks -alias komikku -storepass komikku123 | grep "SHA256:" | cut -d ' ' -f 3 | tr -d ':' | tr '[:upper:]' '[:lower:]' > repo/fingerprint.txt
           fi
 
