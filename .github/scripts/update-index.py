@@ -5,16 +5,17 @@ from collections import OrderedDict
 # Root directory of the repo
 REPO_DIR = Path(".")
 
-# Exact official metadata fields for Mangago (Version 34)
-# Reverting to STRING ID and removing flags to match Keiyoushi exactly
+# Exact official metadata fields for Mangago (Version 35)
+# Using the ACTUAL EXTRACTED FINGERPRINT from v34 to ensure trust
+# Fingerprint: 52608b9ec513f9073c9b3ccff4651e75b71900380f6fb1533b03e2e1145cd1f4
 extension_metadata = {
     "eu.kanade.tachiyomi.extension.en.mangago": {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
-        "apk": "tachiyomi-en.mangago-v1.4.34.apk",
+        "apk": "tachiyomi-en.mangago-v1.4.35.apk",
         "lang": "en",
-        "code": 34,
-        "version": "1.4.34",
+        "code": 35,
+        "version": "1.4.35",
         "nsfw": 1,
         "sources": [
             {
@@ -45,8 +46,8 @@ for pkg_name, meta in extension_metadata.items():
 
 index_min_data.sort(key=lambda x: x["pkg"])
 
-# Unified signing fingerprint
-fingerprint = "9fdf4569e651ebe179308070e1f59574d01513274d11ed3c3999e7339e0aa191"
+# The actual certificate fingerprint from the CI-built APK
+fingerprint = "52608b9ec513f9073c9b3ccff4651e75b71900380f6fb1533b03e2e1145cd1f4"
 
 repo_meta = {
     "meta": {
@@ -68,4 +69,4 @@ with (REPO_DIR / "index.json").open("w", encoding="utf-8") as f:
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_meta, f, ensure_ascii=False, indent=2)
 
-print(f"Successfully generated version 34 metadata (Perfect alignment with official standards).")
+print(f"Successfully generated version 35 metadata with extracted fingerprint.")
