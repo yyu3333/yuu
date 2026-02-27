@@ -109,6 +109,19 @@ jobs:
         with:
           ref: master
           path: master
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate Signing Key
+        run: |
+          if [ ! -f master/signingkey.jks ]; then
+            keytool -genkey -v -keystore master/signingkey.jks -alias komikku -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=komikku" -storepass komikku123 -keypass komikku123
+            cd master
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            git add signingkey.jks
+            git commit -m "Add permanent signing key [skip ci]"
+            git push origin master
+          fi
 
       - name: Checkout repo branch
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
