@@ -10,11 +10,11 @@ extension_metadata = {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
         "lang": "en",
-        "code": 30,
-        "version": "1.4.30",
+        "code": 31,
+        "version": "1.4.31",
         "nsfw": 1,
-        "hasIcon": 0,
-        "hasBanner": 0,
+        "hasIcon": False,
+        "hasBanner": False,
         "sources": [
             {
                 "name": "Mangago",
