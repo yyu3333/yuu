@@ -248,8 +248,15 @@ class Mangago :
         val pageDataScript =
             document.selectFirst("script:containsData(total_pages=), script:containsData(mid=), script:containsData(cid=)")
                 ?.data().orEmpty()
-        val totalPagesRegex = Regex("total_pages\\s*=\\s*(\\d+)")
-        val totalPages = totalPagesRegex.find(pageDataScript)?.groupValues?.get(1)?.toIntOrNull() ?: 0
+        val totalPagesRegex = Regex("""total_pages\s*=\s*(?:'|")?(\d+)(?:'|")?""")
+        val totalPages = try {
+            totalPagesRegex.find(pageDataScript)?.groupValues?.get(1)?.toIntOrNull() ?: 0
+        } catch (e: Exception) {
+            val title = document.title()
+            val reqUrl = document.location()
+            val actualUrl = document.baseUri()
+            throw Exception("X-RAY: [Req: $reqUrl] [Real: $actualUrl] [Title: $title] - failed to parse total pages. $e")
+        }
         val chapterKey = parseChapterKey(document)
 
         synchronized(chapterJsCacheMutex) {
@@ -269,17 +276,18 @@ class Mangago :
         val cleanTemplate = runCatching { pageURLTemplate.toHttpUrl().encodedPath }.getOrDefault(pageURLTemplate)
             .removePrefix("/")
 
-        // Synchronize legacy uu/b or uu/t templates with the active path (br, to, nml, etc)
-        // We use IGNORE_CASE to handle site differences, and ensure the pattern works for paths
-        val pattern = Regex.escape(cleanTemplate.replace("{page}", "{P}"))
+        // Broadly replace any "uu/..." segment in the template with the one from the actual URL
+        // This handles cases like uu/b vs uu/br vs uu/to vs uu/nml regardless of template position
+        val urlUuPart = Regex("""uu/([^/]+)""").find(sourcePath)?.value
+        val templateUuPart = Regex("""uu/([^/]+)""").find(cleanTemplate)?.value
+
+        var correctedTemplate = cleanTemplate
+        if (urlUuPart != null && templateUuPart != null) {
+            correctedTemplate = cleanTemplate.replace(templateUuPart, urlUuPart)
+        }
+
+        val pattern = Regex.escape(correctedTemplate.replace("{page}", "{P}"))
             .replace("\\{P\\}", "(\\d+)")
-            .let {
-                if (it.contains("uu/")) {
-                    it.replace(Regex("""uu/[^/]+/"""), "uu/[^/]+/")
-                } else {
-                    it
-                }
-            }
 
         val curlPattern = runCatching { Regex(pattern, RegexOption.IGNORE_CASE) }.getOrNull()
         val match = curlPattern?.find(sourcePath)
@@ -438,12 +446,13 @@ class Mangago :
 
     private fun getChapterImageUrls(document: Document): List<String> {
         val scripts = document.select("script")
-        val imgsrcsScript = scripts.find { it.data().contains("imgsrcs =") }?.data()
-            ?: scripts.find { it.data().contains("imgsrcs") }?.data()
-            ?: throw Exception(
-                "Mangago: getChapterImageUrls failed - could not find 'imgsrcs' script " +
-                    "in '${document.title()}' at ${document.location()}",
-            )
+        val imgsrcsScript = scripts.find { it.data().contains("imgsrcs") }?.data()
+            ?: run {
+                val title = document.title()
+                val reqUrl = document.location()
+                val actualUrl = document.baseUri()
+                throw Exception("X-RAY: [Req: $reqUrl] [Real: $actualUrl] [Title: $title] - missing imgsrcs")
+            }
 
         val imgsrcRaw = imgSrcsRegex.find(imgsrcsScript)?.groupValues?.get(1)
             ?: throw Exception("Mangago: getChapterImageUrls failed - could not extract imgsrcs data")
