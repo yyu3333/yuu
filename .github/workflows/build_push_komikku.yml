@@ -126,10 +126,18 @@ jobs:
       - name: Extract Fingerprint
         run: |
           mkdir -p repo
-          # Extract from the JKS file we just generated/committed to master
-          FINGERPRINT=$(keytool -list -v -keystore master/signingkey.jks -alias komikku -storepass komikku123 | grep "SHA256:" | head -n 1 | cut -d ' ' -f 3 | tr -d ':' | tr '[:upper:]' '[:lower:]')
-          echo "$FINGERPRINT" > repo/fingerprint.txt
-          echo "Extracted Fingerprint: $(cat repo/fingerprint.txt)"
+          # Find the Mangago APK in artifacts
+          APK_PATH=$(find ~/apk-artifacts -name "*mangago*.apk" | head -n 1)
+          if [ -n "$APK_PATH" ] && [ -f "$APK_PATH" ]; then
+            echo "Found APK: $APK_PATH"
+            # Extract SHA-256 from the APK itself
+            keytool -printcert -jarfile "$APK_PATH" | grep "SHA256:" | head -n 1 | cut -d ' ' -f 3 | tr -d ':' | tr '[:upper:]' '[:lower:]' > repo/fingerprint.txt
+            echo "True Fingerprint from APK: $(cat repo/fingerprint.txt)"
+          else
+            echo "Mangago APK not found, falling back to JKS"
+            keytool -list -v -keystore master/signingkey.jks -alias komikku -storepass komikku123 | grep "SHA256:" | head -n 1 | cut -d ' ' -f 3 | tr -d ':' | tr '[:upper:]' '[:lower:]' > repo/fingerprint.txt
+            echo "Fingerprint from JKS: $(cat repo/fingerprint.txt)"
+          fi
 
       - name: Checkout repo branch
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
