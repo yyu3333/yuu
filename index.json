@@ -2,10 +2,10 @@
   {
     "name": "Tachiyomi: Mangago",
     "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
-    "apk": "tachiyomi-en.mangago-v1.4.110.apk",
+    "apk": "tachiyomi-en.mangago-v1.4.111.apk",
     "lang": "en",
-    "code": 110,
-    "version": "1.4.110",
+    "code": 111,
+    "version": "1.4.111",
     "nsfw": 1,
     "sources": [
       {
