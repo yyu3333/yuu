@@ -14,19 +14,19 @@ if FINGERPRINT_FILE.exists():
         fingerprint = f.read().strip()
     print(f"Found fingerprint.txt: {fingerprint}")
 else:
-    # Use the hardcoded TRUE fingerprint confirmed via v42 logs
+    # Use the hardcoded TRUE fingerprint confirmed via v42/v45 logs
     fingerprint = "70ec4c637e8b5c5d1b5a3ca815b5cb8e608f275a3fae15326afd1b262b9adbff"
     print(f"No fingerprint.txt found, using fallback: {fingerprint}")
 
-# Exact official metadata fields for Mangago (Version 45)
+# Exact official metadata fields for Mangago (Version 50)
 extension_metadata = {
     "eu.kanade.tachiyomi.extension.en.mangago": {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
-        "apk": "tachiyomi-en.mangago-v1.4.45.apk",
+        "apk": "tachiyomi-en.mangago-v1.4.50.apk",
         "lang": "en",
-        "code": 45,
-        "version": "1.4.45",
+        "code": 50,
+        "version": "1.4.50",
         "nsfw": 1,
         "sources": [
             {
@@ -76,4 +76,4 @@ with (REPO_DIR / "index.json").open("w", encoding="utf-8") as f:
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_meta, f, ensure_ascii=False, indent=2)
 
-print(f"Generated v45 metadata with verified fingerprint: {fingerprint}")
+print(f"Generated v50 metadata with verified fingerprint: {fingerprint}")
