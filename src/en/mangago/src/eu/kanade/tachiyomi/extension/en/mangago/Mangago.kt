@@ -264,8 +264,7 @@ class Mangago :
 
         val cleanTemplate = pageURLTemplate.removePrefix("/")
 
-        // Generalize any Mangago legacy template under /uu/ to match the actual active path
-        // e.g. uu/b/ -> uu/br_chapter.../ or uu/t/ -> uu/to_chapter.../ or uu/n/ -> uu/nml_chapter.../
+        // Synchronize legacy uu/b or uu/t templates with the active path (br, to, nml, etc)
         val pattern = Regex.escape(cleanTemplate.replace("{page}", "{P}"))
             .replace("\\{P\\}", "(\\d+)")
             .let {
@@ -290,7 +289,9 @@ class Mangago :
                 val pgEnd = match.groups[1]!!.range.last
                 val end = match.range.last
 
-                sourcePath.substring(start, pgStart) + pageNumber.toString() + sourcePath.substring(pgEnd + 1, end + 1)
+                sourcePath.substring(start, pgStart) +
+                    pageNumber.toString() +
+                    sourcePath.substring(pgEnd + 1, end + 1)
             } else {
                 pageURLTemplate.replace("{page}", pageNumber.toString())
             }
@@ -305,7 +306,9 @@ class Mangago :
 
         // Gets the first array of image URLs from the base chapter URL
         val firstUrls = getChapterImageUrls(document)
-        if (firstUrls.isEmpty()) throw Exception("Mangago: pageListParse failed - decoded image url list is empty for ${document.location()}")
+        if (firstUrls.isEmpty()) {
+            throw Exception("Mangago: pageListParse failed - decoded image url list is empty")
+        }
         // Webcomics have the array of images partially filled with empty strings [eg: 1,2,3,,, or ,,,4,5,6]
         val hasEmptyUrls = firstUrls.any { it.isBlank() }
         if (!hasEmptyUrls) {
