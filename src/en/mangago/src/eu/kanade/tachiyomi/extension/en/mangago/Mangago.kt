@@ -427,10 +427,13 @@ class Mangago :
     }
 
     private fun getChapterImageUrls(document: Document): List<String> {
-        val imgsrcsScript = document.selectFirst("script:containsData(imgsrcs)")?.html()
+        val scripts = document.select("script")
+        val imgsrcsScript = scripts.find { it.data().contains("imgsrcs =") }?.data()
+            ?: scripts.find { it.data().contains("imgsrcs") }?.data()
             ?: throw Exception("Mangago: getChapterImageUrls failed - could not find 'imgsrcs' script")
+
         val imgsrcRaw = imgSrcsRegex.find(imgsrcsScript)?.groupValues?.get(1)
-            ?: throw Exception("Mangago: getChapterImageUrls failed - could not extract base64 imgsrcs")
+            ?: throw Exception("Mangago: getChapterImageUrls failed - could not extract imgsrcs data")
         val imgsrcs = Base64.decode(imgsrcRaw, Base64.DEFAULT)
 
         val decryptCache = getOrBuildChapterJsCache(document)
@@ -729,7 +732,7 @@ class Mangago :
     }
 
     private val imgSrcsRegex by lazy {
-        Regex("""var\s*imgsrcs\s*=\s*['"]([a-zA-Z0-9+=/]+)['"]""")
+        Regex("""var\s*imgsrcs\s*=\s*['"]([^'"]+)['"]""")
     }
 
     private val colsRegex =
