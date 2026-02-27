@@ -123,9 +123,14 @@ jobs:
             git push origin master
           fi
 
+      - name: Checkout repo branch
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          ref: repo
+          path: repo
+
       - name: Extract Fingerprint
         run: |
-          mkdir -p repo
           # Find the Mangago APK in artifacts
           APK_PATH=$(find ~/apk-artifacts -name "*mangago*.apk" | head -n 1)
           if [ -n "$APK_PATH" ] && [ -f "$APK_PATH" ]; then
@@ -138,12 +143,6 @@ jobs:
             keytool -list -v -keystore master/signingkey.jks -alias komikku -storepass komikku123 | grep "SHA256:" | head -n 1 | cut -d ' ' -f 3 | tr -d ':' | tr '[:upper:]' '[:lower:]' > repo/fingerprint.txt
             echo "Fingerprint from JKS: $(cat repo/fingerprint.txt)"
           fi
-
-      - name: Checkout repo branch
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          ref: repo
-          path: repo
 
       - name: Create repo artifacts
         run: |
