@@ -63,6 +63,7 @@ class Mangago :
     private val chapterJsCacheMutex = Any()
 
     override val name = "Mangago"
+    override val id: Long = 2470059397662084186L
 
     override val baseUrl = "https://www.mangago.me"
 
