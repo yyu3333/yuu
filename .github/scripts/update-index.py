@@ -10,8 +10,8 @@ extension_metadata = {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
         "lang": "en",
-        "code": 23,
-        "version": "1.4.23",
+        "code": 30,
+        "version": "1.4.30",
         "nsfw": 1,
         "sources": [
             {
@@ -47,7 +47,7 @@ repo_data = {
     }
 }
 
-fingerprint_file = REPO_DIR / "fingerprint.txt"
+fingerprint_file = REPO_DIR / "src" / "fingerprint.txt"
 if fingerprint_file.exists():
     with fingerprint_file.open("r", encoding="utf-8") as f:
         repo_data["meta"]["signingKeyFingerprint"] = f.readline().strip()
