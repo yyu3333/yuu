@@ -704,7 +704,7 @@ class Mangago :
     }
 
     private val imgSrcsRegex by lazy {
-        Regex("""var imgsrcs\s*=\s*['"]([a-zA-Z0-9+=/]+)['"]""")
+        Regex("""var\s*imgsrcs\s*=\s*['"]([a-zA-Z0-9+=/]+)['"]""")
     }
 
     private val colsRegex =
