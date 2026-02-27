@@ -18,6 +18,7 @@ extension_metadata = {
         "sources": [
             {
                 "name": "Mangago",
+                "lang": "en",
                 "id": "2470059397662084186",
                 "baseUrl": "https://www.mangago.me"
             }
