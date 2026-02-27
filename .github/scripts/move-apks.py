@@ -44,7 +44,11 @@ if not apk_artifacts.exists():
     # Fallback for local testing
     apk_artifacts = REPO_DIR.parent / "apk-artifacts"
 
-for apk in apk_artifacts.glob("**/*.apk"):
+print(f"Searching for APKs in: {apk_artifacts.absolute()}")
+all_apks = list(apk_artifacts.glob("**/*.apk"))
+print(f"Found {len(all_apks)} APKs: {[a.name for a in all_apks]}")
+
+for apk in all_apks:
     # Align naming with build.gradle
     if "mangago" in apk.name.lower():
         apk_name = f"tachiyomi-en.mangago-v1.4.{version_code}.apk"
