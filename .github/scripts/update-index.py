@@ -51,6 +51,9 @@ fingerprint_file = REPO_DIR / "fingerprint.txt"
 if fingerprint_file.exists():
     with fingerprint_file.open("r", encoding="utf-8") as f:
         repo_data["meta"]["signingKeyFingerprint"] = f.readline().strip()
+else:
+    # Fallback to hardcoded fingerprint if file is missing in CI
+    repo_data["meta"]["signingKeyFingerprint"] = "9fdf4569e651ebe179308070e1f59574d01513274d11ed3c3999e7339e0aa191"
 
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_data, f, indent=2)
