@@ -55,7 +55,11 @@ android {
 
     signingConfigs {
         release {
-            storeFile rootProject.file("signingkey.jks")
+            File keyFile = rootProject.file("signingkey.jks")
+            if (!keyFile.exists()) {
+                throw new GradleException("Signing key not found at ${keyFile.absolutePath}")
+            }
+            storeFile keyFile
             storePassword System.getenv("KEY_STORE_PASSWORD")
             keyAlias System.getenv("ALIAS")
             keyPassword System.getenv("KEY_PASSWORD")

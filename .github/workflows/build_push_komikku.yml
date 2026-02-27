@@ -125,9 +125,16 @@ jobs:
 
       - name: Extract Fingerprint
         run: |
-          mkdir -p master/src
-          keytool -list -v -keystore master/signingkey.jks -alias komikku -storepass komikku123 | grep "SHA256:" | cut -d ' ' -f 3 | tr -d ':' | tr '[:upper:]' '[:lower:]' > master/src/fingerprint.txt
-          echo "Extracted Fingerprint: $(cat master/src/fingerprint.txt)"
+          mkdir -p repo
+          # Extract from the first APK found in artifacts (Mangago)
+          APK_PATH=$(find ~/apk-artifacts -name "tachiyomi-en.mangago-v1.4.37.apk" | head -n 1)
+          if [ -n "$APK_PATH" ]; then
+            python master/check_sig_v4.py "$APK_PATH" | grep "SHA-256 Fingerprint:" | cut -d ' ' -f 3 > repo/fingerprint.txt
+            echo "Extracted Fingerprint from APK: $(cat repo/fingerprint.txt)"
+          else
+            echo "Mangago APK not found, falling back to JKS extraction"
+            keytool -list -v -keystore master/signingkey.jks -alias komikku -storepass komikku123 | grep "SHA256:" | cut -d ' ' -f 3 | tr -d ':' | tr '[:upper:]' '[:lower:]' > repo/fingerprint.txt
+          fi
 
       - name: Checkout repo branch
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -142,7 +149,7 @@ jobs:
           cp master/src/en/mangago/res/mipmap-xxhdpi/ic_launcher.png repo/icon/eu.kanade.tachiyomi.extension.en.mangago.png
           cp master/.github/scripts/move-apks.py repo/.github/scripts/move-apks.py
           cp master/.github/scripts/update-index.py repo/.github/scripts/update-index.py
-          cp master/src/fingerprint.txt repo/fingerprint.txt
+          # fingerprint.txt is already in repo/
           cd repo
           python ./.github/scripts/move-apks.py
           python ./.github/scripts/update-index.py
