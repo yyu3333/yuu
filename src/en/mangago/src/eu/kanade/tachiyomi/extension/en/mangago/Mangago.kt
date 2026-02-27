@@ -354,7 +354,6 @@ class Mangago :
         }
     }
 
->>>>>>> 0f57f1c (Fix: Robust URL prefix preservation and sync (v112))
     override fun fetchImageUrl(page: Page): Observable<String> = Observable.fromCallable {
         val chapterKey = page.url.toHttpUrl().fragment
             ?.substringAfter("chapterKey=")
