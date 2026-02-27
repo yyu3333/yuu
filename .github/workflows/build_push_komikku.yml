@@ -123,7 +123,7 @@ jobs:
           cp master/src/en/mangago/res/mipmap-xxhdpi/ic_launcher.png repo/icon/eu.kanade.tachiyomi.extension.en.mangago.png
           cp master/.github/scripts/move-apks.py repo/.github/scripts/move-apks.py
           cp master/.github/scripts/update-index.py repo/.github/scripts/update-index.py
-          cp master/fingerprint.txt repo/fingerprint.txt
+          cp master/src/fingerprint.txt repo/fingerprint.txt
           cd repo
           python ./.github/scripts/move-apks.py
           python ./.github/scripts/update-index.py
