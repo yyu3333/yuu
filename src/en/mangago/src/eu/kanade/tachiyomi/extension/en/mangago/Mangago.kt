@@ -89,7 +89,8 @@ class Mangago :
 
             // desckey=...&cols=...
             val key = fragment.substringAfter("desckey=").substringBefore("&")
-            val cols = fragment.substringAfter("&cols=").toIntOrNull() ?: return@addInterceptor response
+            val cols = fragment.substringAfter("&cols=").toIntOrNull()
+                ?: return@addInterceptor response
 
             val image = unscrambleImage(response.body.byteStream(), key, cols)
             val body = image.toResponseBody("image/jpeg".toMediaTypeOrNull())
@@ -424,9 +425,9 @@ class Mangago :
 
     private fun getChapterImageUrls(document: Document): List<String> {
         val imgsrcsScript = document.selectFirst("script:containsData(imgsrcs)")?.html()
-            ?: throw Exception("Mangago: getChapterImageUrls failed - could not find 'imgsrcs' script in ${document.location()}")
+            ?: throw Exception("Mangago: getChapterImageUrls failed - could not find 'imgsrcs' script")
         val imgsrcRaw = imgSrcsRegex.find(imgsrcsScript)?.groupValues?.get(1)
-            ?: throw Exception("Mangago: getChapterImageUrls failed - could not extract base64 imgsrcs from script in ${document.location()}")
+            ?: throw Exception("Mangago: getChapterImageUrls failed - could not extract base64 imgsrcs")
         val imgsrcs = Base64.decode(imgsrcRaw, Base64.DEFAULT)
 
         val decryptCache = getOrBuildChapterJsCache(document)
@@ -679,9 +680,10 @@ class Mangago :
         return output.toByteArray()
     }
 
-    private fun buildCookies(cookies: Map<String, String>) = cookies.entries.joinToString(separator = "; ", postfix = ";") {
-        "${URLEncoder.encode(it.key, "UTF-8")}=${URLEncoder.encode(it.value, "UTF-8")}"
-    }
+    private fun buildCookies(cookies: Map<String, String>) =
+        cookies.entries.joinToString(separator = "; ", postfix = ";") {
+            "${URLEncoder.encode(it.key, "UTF-8")}=${URLEncoder.encode(it.value, "UTF-8")}"
+        }
 
     private fun String.decodeHex(): ByteArray {
         check(length % 2 == 0) { "Must have an even length" }
