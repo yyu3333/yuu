@@ -3,8 +3,8 @@
     "name": "Tachiyomi: Mangago",
     "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
     "lang": "en",
-    "code": 31,
-    "version": "1.4.31",
+    "code": 32,
+    "version": "1.4.32",
     "nsfw": 1,
     "hasIcon": false,
     "hasBanner": false,
@@ -16,6 +16,6 @@
         "baseUrl": "https://www.mangago.me"
       }
     ],
-    "apk": "apk/tachiyomi-en.mangago-v1.4.31.apk"
+    "apk": "tachiyomi-en.mangago-v1.4.32.apk"
   }
 ]
