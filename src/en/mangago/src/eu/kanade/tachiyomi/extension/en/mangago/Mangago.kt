@@ -60,6 +60,7 @@ class Mangago :
     private val chapterJsCacheMutex = Any()
 
     override val name = "Mangago"
+    override val id: Long = 2470059397662084186L
 
     override val baseUrl = "https://www.mangago.me"
 
@@ -250,7 +251,7 @@ class Mangago :
         val pageDataScript =
             document.selectFirst("script:containsData(total_pages=), script:containsData(mid=), script:containsData(cid=)")
                 ?.data().orEmpty()
-        val totalPagesRegex = Regex("total_pages\\\\s*=\\\\s*(\\\\d+)")
+        val totalPagesRegex = Regex("""total_pages\s*=\s*(\d+)""")
         val totalPages = totalPagesRegex.find(pageDataScript)?.groupValues?.get(1)?.toIntOrNull() ?: 0
         val chapterKey = parseChapterKey(document)
 
@@ -316,7 +317,7 @@ class Mangago :
 
         // Convert a template segment pattern to a regex (replace {placeholder} with .+)
         fun templateSegmentMatches(templateSeg: String, urlSeg: String): Boolean {
-            val regex = templateSeg.replace(Regex("\"\"\"\\{[^}]+\\}\"\"\""), ".+")
+            val regex = templateSeg.replace(Regex("""\{[^}]+\}"""), ".+")
             return urlSeg.matches(Regex(regex))
         }
 
@@ -417,8 +418,8 @@ class Mangago :
         val pageDataScript =
             document.selectFirst("script:containsData(total_pages=), script:containsData(mid=), script:containsData(cid=)")
                 ?.data().orEmpty()
-        val midRegex = Regex("\"\"\"mid\\s*=\\s*\"([^\"]+)\"\"\"\"")
-        val cidRegex = Regex("\"\"\"cid\\s*=\\s*(\\d+)\"\"\"")
+        val midRegex = Regex("""mid\s*=\s*"([^"]+)"""")
+        val cidRegex = Regex("""cid\s*=\s*(\d+)""")
         val mid = midRegex.find(pageDataScript)?.groupValues?.get(1).orEmpty()
         val cid = cidRegex.find(pageDataScript)?.groupValues?.get(1).orEmpty()
         if (mid.isBlank() || cid.isBlank()) {
