@@ -10,8 +10,8 @@ extension_metadata = {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
         "lang": "en",
-        "code": 32,
-        "version": "1.4.32",
+        "code": 33,
+        "version": "1.4.33",
         "nsfw": 1,
         "hasIcon": False,
         "hasBanner": False,
@@ -19,7 +19,7 @@ extension_metadata = {
             {
                 "name": "Mangago",
                 "lang": "en",
-                "id": "2470059397662084186",
+                "id": 2470059397662084186,
                 "baseUrl": "https://www.mangago.me"
             }
         ]
@@ -36,22 +36,10 @@ for pkg_name, meta in extension_metadata.items():
 
 index_min_data.sort(key=lambda x: x["pkg"])
 
-with (REPO_DIR / "index.min.json").open("w", encoding="utf-8") as f:
-    json.dump(index_min_data, f, ensure_ascii=False, separators=(",", ":"))
-
-with (REPO_DIR / "index.json").open("w", encoding="utf-8") as f:
-    json.dump(index_min_data, f, indent=2)
-
-repo_data = {
+repo_meta = {
     "meta": {
         "name": "yyu3333",
         "website": "https://github.com/yyu3333/yuu",
-    }
-}
-
-fingerprint_file = REPO_DIR / "fingerprint.txt"
-if fingerprint_file.exists():
-    with fingerprint_file.open("r", encoding="utf-8") as f:
         repo_data["meta"]["signingKeyFingerprint"] = f.readline().strip()
 else:
     # Fallback to hardcoded fingerprint if file is missing in CI
