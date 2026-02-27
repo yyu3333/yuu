@@ -149,13 +149,11 @@ jobs:
         run: |
           mkdir -p repo/icon
           mkdir -p repo/apk
+          mkdir -p repo/.github/scripts
           cp master/src/en/mangago/res/mipmap-xxhdpi/ic_launcher.png repo/icon/eu.kanade.tachiyomi.extension.en.mangago.png
-          cp master/.github/scripts/move-apks.py repo/.github/scripts/move-apks.py
-          cp master/.github/scripts/update-index.py repo/.github/scripts/update-index.py
-          # fingerprint.txt is already in repo/
-          cd repo
-          python ./.github/scripts/move-apks.py
-          python ./.github/scripts/update-index.py
+          # Run scripts from master branch, but target the repo folder
+          python master/.github/scripts/move-apks.py repo
+          python master/.github/scripts/update-index.py repo
 
       - name: Commit and push changes
         run: |

@@ -1,18 +1,19 @@
-from pathlib import Path
 import shutil
+import sys
+from pathlib import Path
 
-# Move to apk folder
-REPO_DIR = Path(".")
-apk_dir = REPO_DIR / "apk"
-
-if apk_dir.exists():
-    shutil.rmtree(apk_dir)
+# Target directory is the first argument, or current dir
+TARGET_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
+apk_dir = TARGET_DIR / "apk"
 apk_dir.mkdir(parents=True, exist_ok=True)
 
+# Move APKs from common artifact location to the repo branch folder
 for apk in (Path.home() / "apk-artifacts").glob("**/*.apk"):
     # Align naming with update-index.py
     if "mangago" in apk.name.lower():
-        apk_name = "tachiyomi-en.mangago-v1.4.43.apk"
+        apk_name = "tachiyomi-en.mangago-v1.4.44.apk"
     else:
         apk_name = apk.name.replace("-release-unsigned.apk", ".apk").replace("-release.apk", ".apk").replace("-debug.apk", ".apk")
+    
+    print(f"Moving {apk} to {apk_dir / apk_name}")
     shutil.move(apk, apk_dir / apk_name)

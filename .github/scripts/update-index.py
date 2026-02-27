@@ -1,12 +1,13 @@
 import json
+import sys
 from pathlib import Path
 from collections import OrderedDict
 
-# Root directory of the repo
-REPO_DIR = Path(".")
+# Default to current directory if no argument provided
+REPO_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
+print(f"Updating index in: {REPO_DIR.absolute()}")
 
 # Fetch fingerprint from file generated during CI
-# v42 confirmed the TRUE APK fingerprint is 70ec4c...
 FINGERPRINT_FILE = REPO_DIR / "fingerprint.txt"
 if FINGERPRINT_FILE.exists():
     with FINGERPRINT_FILE.open("r", encoding="utf-8") as f:
@@ -15,15 +16,15 @@ else:
     # Use the hardcoded TRUE fingerprint confirmed via v42 logs
     fingerprint = "70ec4c637e8b5c5d1b5a3ca815b5cb8e608f275a3fae15326afd1b262b9adbff"
 
-# Exact official metadata fields for Mangago (Version 43)
+# Exact official metadata fields for Mangago (Version 44)
 extension_metadata = {
     "eu.kanade.tachiyomi.extension.en.mangago": {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
-        "apk": "tachiyomi-en.mangago-v1.4.43.apk",
+        "apk": "tachiyomi-en.mangago-v1.4.44.apk",
         "lang": "en",
-        "code": 43,
-        "version": "1.4.43",
+        "code": 44,
+        "version": "1.4.44",
         "nsfw": 1,
         "sources": [
             {
@@ -73,4 +74,4 @@ with (REPO_DIR / "index.json").open("w", encoding="utf-8") as f:
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_meta, f, ensure_ascii=False, indent=2)
 
-print(f"Generated v43 metadata with verified fingerprint: {fingerprint}")
+print(f"Generated v44 metadata with verified fingerprint: {fingerprint}")
