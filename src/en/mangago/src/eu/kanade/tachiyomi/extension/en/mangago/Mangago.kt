@@ -61,10 +61,8 @@ class Mangago :
     private val chapterJsCache = mutableMapOf<String, ChapterJsDecryptCache>()
     private val chapterJsFetchLockMap = mutableMapOf<String, Any>()
     private val chapterJsCacheMutex = Any()
-
-    override val name = "Mangago"
     override val id: Long = 2470059397662084186L
-
+    override val name = "Mangago"
     override val baseUrl = "https://www.mangago.me"
 
     override val lang = "en"
@@ -270,72 +268,26 @@ class Mangago :
             )
         }
 
-        val baseUrl = document.location().toHttpUrl()
-        val sourcePath = baseUrl.encodedPath
-
-        val cleanTemplate = runCatching { pageURLTemplate.toHttpUrl().encodedPath }.getOrDefault(pageURLTemplate)
-            .removePrefix("/")
-
-        // Broadly replace any "uu/..." segment in the template with the one from the actual URL
-        // This handles cases like uu/b vs uu/br vs uu/to vs uu/nml regardless of template position
-        val urlUuPart = Regex("""uu/([^/]+)""").find(sourcePath)?.value
-        val templateUuPart = Regex("""uu/([^/]+)""").find(cleanTemplate)?.value
-
-        var correctedTemplate = cleanTemplate
-        if (urlUuPart != null && templateUuPart != null) {
-            correctedTemplate = cleanTemplate.replace(templateUuPart, urlUuPart)
-        }
-
-        val pattern = Regex.escape(correctedTemplate.replace("{page}", "{P}"))
-            .replace("\\{P\\}", "(\\d+)")
-
-        val curlPattern = runCatching { Regex(pattern, RegexOption.IGNORE_CASE) }.getOrNull()
-        val match = curlPattern?.find(sourcePath)
-
-        val prefix = if (match != null) {
-            sourcePath.substring(0, match.range.first).removeSuffix("/")
-        } else {
-            ""
-        }
+        val urlTemplate = mergeUrlWithTemplate(
+            document.location().toHttpUrl().encodedPath,
+            pageURLTemplate,
+        )
 
         val pageLinks = (1..totalPages).map { pageNumber ->
-            val relative = if (match != null && match.groups.size > 1) {
-                // Adapt the template using the active path segments
-                val start = match.range.first
-                val pgStart = match.groups[1]!!.range.first
-                val pgEnd = match.groups[1]!!.range.last
-                val end = match.range.last
+            val path = urlTemplate.replace("{page}", pageNumber.toString())
 
-                sourcePath.substring(start, pgStart) +
-                    pageNumber.toString() +
-                    sourcePath.substring(pgEnd + 1, end + 1)
-            } else {
-                pageURLTemplate.replace("{page}", pageNumber.toString())
-            }
-
-            val normalizedPath = when {
-                prefix.isBlank() -> relative
-                else -> "$prefix/${relative.removePrefix("/")}"
-            }
-            val href = baseUrl.newBuilder().encodedPath(normalizedPath).build().toString()
-            (pageNumber - 1) to href
+            (pageNumber - 1) to baseUrl + path
         }
 
         // Gets the first array of image URLs from the base chapter URL
-        val firstUrls = try {
-            getChapterImageUrls(document)
-        } catch (e: Exception) {
-            val debugInfo = "MATCH: ${match != null} | TEMPLATE: $pageURLTemplate | SOURCE: $sourcePath"
-            throw Exception("Mangago Debug ($debugInfo) -> ${e.message}")
-        }
-        if (firstUrls.isEmpty()) {
-            throw Exception("Mangago: pageListParse failed - decoded image url list is empty")
-        }
+        val firstUrls = getChapterImageUrls(document)
+        if (firstUrls.isEmpty()) throw Exception("Mangago: pageListParse failed - decoded image url list is empty")
+
         // Webcomics have the array of images partially filled with empty strings [eg: 1,2,3,,, or ,,,4,5,6]
         val hasEmptyUrls = firstUrls.any { it.isBlank() }
         if (!hasEmptyUrls) {
             // Mangas have the full array of image URLs in the first request
-            return pageLinks.mapIndexed { idx, (pageIndex, href) ->
+            return pageLinks.mapIndexed { idx, (pageIndex, _) ->
                 val resolved = firstUrls.getOrNull(pageIndex)
                     ?: firstUrls.getOrNull(idx)
                 if (resolved.isNullOrBlank()) {
@@ -369,6 +321,34 @@ class Mangago :
         return pages
     }
 
+    private val MATCH_UU_SEGMENT = "uu/[^/]+/".toRegex()
+
+    private fun mergeUrlWithTemplate(urlPath: String, template: String): String {
+        // urlPath: /read-manga/name/uu/br/pg-1/
+        // template: uu/b/pg-{page}/
+        val currentUu = MATCH_UU_SEGMENT.find(urlPath)?.value ?: ""
+        val correctedTemplate = if (currentUu.isNotEmpty()) {
+            template.replace(MATCH_UU_SEGMENT, currentUu)
+        } else {
+            template
+        }
+
+        // Find where uu/ starts in the current url to determine prefix
+        val uuIndex = urlPath.indexOf("uu/")
+        val prefix = if (uuIndex != -1) {
+            urlPath.substring(0, uuIndex).removeSuffix("/")
+        } else {
+            ""
+        }
+
+        return if (prefix.isNotEmpty()) {
+            "$prefix/${correctedTemplate.removePrefix("/")}"
+        } else {
+            "/" + correctedTemplate.removePrefix("/")
+        }
+    }
+
+>>>>>>> 0f57f1c (Fix: Robust URL prefix preservation and sync (v112))
     override fun fetchImageUrl(page: Page): Observable<String> = Observable.fromCallable {
         val chapterKey = page.url.toHttpUrl().fragment
             ?.substringAfter("chapterKey=")
