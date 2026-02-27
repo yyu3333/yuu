@@ -1,26 +1,26 @@
 import json
 from pathlib import Path
+from collections import OrderedDict
 
 # Root directory of the repo
 REPO_DIR = Path(".")
 
-# Exact official metadata fields for Mangago
-# Bumped to version 33 / code 33 for the final fix
+# Exact official metadata fields for Mangago (Version 34)
+# Reverting to STRING ID and removing flags to match Keiyoushi exactly
 extension_metadata = {
     "eu.kanade.tachiyomi.extension.en.mangago": {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
+        "apk": "tachiyomi-en.mangago-v1.4.34.apk",
         "lang": "en",
-        "code": 33,
-        "version": "1.4.33",
+        "code": 34,
+        "version": "1.4.34",
         "nsfw": 1,
-        "hasIcon": False,
-        "hasBanner": False,
         "sources": [
             {
                 "name": "Mangago",
                 "lang": "en",
-                "id": 2470059397662084186,
+                "id": "2470059397662084186",
                 "baseUrl": "https://www.mangago.me"
             }
         ]
@@ -31,9 +31,16 @@ index_min_data = []
 
 # Generate entries for index.min.json
 for pkg_name, meta in extension_metadata.items():
-    data = meta.copy()
-    # Path is relative to the repo branch root
-    data["apk"] = f"tachiyomi-{meta['lang']}.{meta['sources'][0]['name'].lower()}-v{meta['version']}.apk"
+    # Use OrderedDict for stable, official field ordering
+    data = OrderedDict()
+    data["name"] = meta["name"]
+    data["pkg"] = meta["pkg"]
+    data["apk"] = meta["apk"]
+    data["lang"] = meta["lang"]
+    data["code"] = meta["code"]
+    data["version"] = meta["version"]
+    data["nsfw"] = meta["nsfw"]
+    data["sources"] = meta["sources"]
     index_min_data.append(data)
 
 index_min_data.sort(key=lambda x: x["pkg"])
@@ -46,8 +53,7 @@ repo_meta = {
         "name": "yyu3333",
         "website": "https://github.com/yyu3333/yuu",
         "signingKeyFingerprint": fingerprint
-    },
-    "signingKeyFingerprint": fingerprint
+    }
 }
 
 # 1. Write out minified index (Tachiyomi standard)
@@ -62,4 +68,4 @@ with (REPO_DIR / "index.json").open("w", encoding="utf-8") as f:
 with (REPO_DIR / "repo.json").open("w", encoding="utf-8") as f:
     json.dump(repo_meta, f, ensure_ascii=False, indent=2)
 
-print(f"Successfully generated version 33 metadata with numeric ID and dual fingerprint.")
+print(f"Successfully generated version 34 metadata (Perfect alignment with official standards).")
