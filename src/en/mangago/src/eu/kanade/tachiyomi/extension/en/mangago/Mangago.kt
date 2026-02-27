@@ -11,6 +11,9 @@ import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreferenceCompat
 import app.cash.quickjs.QuickJs
 import eu.kanade.tachiyomi.lib.randomua.addRandomUAPreferenceToScreen
+import eu.kanade.tachiyomi.lib.randomua.getPrefCustomUA
+import eu.kanade.tachiyomi.lib.randomua.getPrefUAType
+import eu.kanade.tachiyomi.lib.randomua.setRandomUserAgent
 import eu.kanade.tachiyomi.network.GET
 import eu.kanade.tachiyomi.network.interceptor.rateLimit
 import eu.kanade.tachiyomi.source.ConfigurableSource
@@ -45,7 +48,7 @@ class Mangago :
     ParsedHttpSource(),
     ConfigurableSource {
 
-    private class ChapterJsDecryptCache(
+    private data class ChapterJsDecryptCache(
         val deobfChapterJs: String,
         val key: ByteArray,
         val iv: ByteArray,
@@ -60,7 +63,6 @@ class Mangago :
     private val chapterJsCacheMutex = Any()
 
     override val name = "Mangago"
-    override val id: Long = 2470059397662084186L
 
     override val baseUrl = "https://www.mangago.me"
 
@@ -74,14 +76,10 @@ class Mangago :
 
     override val client = network.cloudflareClient.newBuilder()
         .rateLimit(1, 2)
-        .addInterceptor { chain ->
-            val request = chain.request()
-            val userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
-            val newRequest = request.newBuilder()
-                .header("User-Agent", userAgent)
-                .build()
-            chain.proceed(newRequest)
-        }
+        .setRandomUserAgent(
+            preferences.getPrefUAType(),
+            preferences.getPrefCustomUA(),
+        )
         .addInterceptor { chain ->
             val request = chain.request()
             val response = chain.proceed(request)
@@ -118,18 +116,14 @@ class Mangago :
 
     private val dateFormat = SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH)
 
-    private fun mangaFromElement(element: Element): SManga {
-        val linkElement = element.selectFirst(".thm-effect")
-            ?: element.selectFirst("a")
-            ?: return SManga.create().apply { title = "Error: Link missing" }
+    private fun mangaFromElement(element: Element) = SManga.create().apply {
+        val linkElement = element.selectFirst(".thm-effect")!!
 
-        return SManga.create().apply {
-            setUrlWithoutDomain(linkElement.attr("href"))
-            title = linkElement.attr("title").ifBlank { linkElement.text() }.ifBlank { "Untitled" }
+        setUrlWithoutDomain(linkElement.attr("href"))
+        title = linkElement.attr("title")
 
-            val thumbnailElem = linkElement.selectFirst("img") ?: element.selectFirst("img")
-            thumbnail_url = thumbnailElem?.attr("abs:data-src")?.ifBlank { thumbnailElem.attr("abs:src") } ?: ""
-        }
+        val thumbnailElem = linkElement.selectFirst("img")!!
+        thumbnail_url = thumbnailElem.attr("abs:data-src").ifBlank { thumbnailElem.attr("abs:src") }
     }
 
     override fun popularMangaRequest(page: Int): Request = GET("$baseUrl/genre/all/$page/?f=1&o=1&sortby=view&e=", headers)
@@ -196,7 +190,7 @@ class Mangago :
 
     private var titleRegex: Regex =
         Regex(
-            "\\\\([^()]*\\\\)|\\\\{[^{}]*\\\\}|\\\\[(?:(?!]).)*]|«[^»]*»|〘[^〙]*〙|「[^」]*」|『[^』]*』|≪[^≫]*≫|﹛[^﹜]*﹜|〖[^〖〗]*〗|𖤍.+?𖤍|《[^》]*》|⌜.+?⌝|⟨[^⟩]*⟩|\\\\/Official|\\\\/ Official",
+            "\\([^()]*\\)|\\{[^{}]*\\}|\\[(?:(?!]).)*]|«[^»]*»|〘[^〙]*〙|「[^」]*」|『[^』]*』|≪[^≫]*≫|﹛[^﹜]*﹜|〖[^〖〗]*〗|𖤍.+?𖤍|《[^》]*》|⌜.+?⌝|⟨[^⟩]*⟩|\\/Official|\\/ Official",
             RegexOption.IGNORE_CASE,
         )
 
@@ -248,10 +242,11 @@ class Mangago :
     }
 
     override fun pageListParse(document: Document): List<Page> {
+        val pageURLTemplate = document.selectFirst("input#curl")?.attr("value")?.trim().orEmpty()
         val pageDataScript =
             document.selectFirst("script:containsData(total_pages=), script:containsData(mid=), script:containsData(cid=)")
                 ?.data().orEmpty()
-        val totalPagesRegex = Regex("""total_pages\s*=\s*(\d+)""")
+        val totalPagesRegex = Regex("total_pages\\s*=\\s*(\\d+)")
         val totalPages = totalPagesRegex.find(pageDataScript)?.groupValues?.get(1)?.toIntOrNull() ?: 0
         val chapterKey = parseChapterKey(document)
 
@@ -259,15 +254,35 @@ class Mangago :
             chapterJsCache.remove(chapterKey)
         }
 
-        val urlTemplate = mergeUrlWithTemplate(
-            document.location().toHttpUrl().encodedPath,
-            document.selectFirst("input#curl")!!.attr("value").trim(),
-        )
+        if (pageURLTemplate.isBlank() || totalPages <= 0) {
+            throw Exception("Mangago: pageListParse failed - missing curl template or total_pages in ${document.location()}")
+        }
+
+        val baseUrl = document.location().toHttpUrl()
+        val sourcePath = baseUrl.encodedPath
+
+        val cleanTemplate = pageURLTemplate.removePrefix("/")
+        val escapedTemplate = Regex.escape(cleanTemplate.replace("{page}", "__PAGE__"))
+            .replace("__PAGE__", "\\d+")
+
+        val curlPattern = runCatching { Regex(escapedTemplate) }.getOrNull()
+        val match = curlPattern?.find(sourcePath)
+
+        val prefix = if (match != null) {
+            sourcePath.substring(0, match.range.first).removeSuffix("/")
+        } else {
+            ""
+        }
 
         val pageLinks = (1..totalPages).map { pageNumber ->
-            val path = urlTemplate.replace("{page}", pageNumber.toString())
+            val relative = pageURLTemplate.replace("{page}", pageNumber.toString())
 
-            (pageNumber - 1) to baseUrl + path
+            val normalizedPath = when {
+                prefix.isBlank() -> relative
+                else -> "$prefix/${relative.removePrefix("/")}"
+            }
+            val href = baseUrl.newBuilder().encodedPath(normalizedPath).build().toString()
+            (pageNumber - 1) to href
         }
 
         // Gets the first array of image URLs from the base chapter URL
@@ -277,7 +292,7 @@ class Mangago :
         val hasEmptyUrls = firstUrls.any { it.isBlank() }
         if (!hasEmptyUrls) {
             // Mangas have the full array of image URLs in the first request
-            return pageLinks.mapIndexed { idx, (pageIndex, _) ->
+            return pageLinks.mapIndexed { idx, (pageIndex, href) ->
                 val resolved = firstUrls.getOrNull(pageIndex)
                     ?: firstUrls.getOrNull(idx)
                 if (resolved.isNullOrBlank()) {
@@ -309,48 +324,6 @@ class Mangago :
         }
 
         return pages
-    }
-
-    private fun mergeUrlWithTemplate(url: String, template: String): String {
-        val urlSegments = url.trim('/').split("/")
-        val templateSegments = template.trim('/').split("/")
-
-        // Convert a template segment pattern to a regex (replace {placeholder} with .+)
-        fun templateSegmentMatches(templateSeg: String, urlSeg: String): Boolean {
-            val regex = templateSeg.replace(Regex("""\{[^}]+\}"""), ".+")
-            return urlSeg.matches(Regex(regex))
-        }
-
-        // Find the best (longest) overlap where url suffix matches template prefix
-        var bestOverlapUrl = -1
-        var bestOverlapLen = 0
-
-        for (i in urlSegments.indices) {
-            var matchLen = 0
-            while (matchLen < templateSegments.size &&
-                i + matchLen < urlSegments.size
-            ) {
-                val tSeg = templateSegments[matchLen]
-                val uSeg = urlSegments[i + matchLen]
-                if (templateSegmentMatches(tSeg, uSeg)) {
-                    matchLen++
-                } else {
-                    break
-                }
-            }
-            if (matchLen > bestOverlapLen) {
-                bestOverlapLen = matchLen
-                bestOverlapUrl = i
-            }
-        }
-
-        return if (bestOverlapUrl != -1) {
-            val baseSegments = urlSegments.take(bestOverlapUrl)
-            val trailing = if (template.endsWith("/")) "/" else ""
-            "/" + (baseSegments + templateSegments).joinToString("/") + trailing
-        } else {
-            url.trimEnd('/') + "/" + template.trimStart('/')
-        }
     }
 
     override fun fetchImageUrl(page: Page): Observable<String> = Observable.fromCallable {
@@ -442,6 +415,7 @@ class Mangago :
         cipher.init(Cipher.DECRYPT_MODE, keyS, IvParameterSpec(decryptCache.iv))
 
         var imageList = cipher.doFinal(imgsrcs).toString(Charsets.UTF_8)
+
         imageList = unescrambleImageList(imageList, decryptCache.deobfChapterJs)
 
         val cols = colsRegex.find(decryptCache.deobfChapterJs)?.groupValues?.get(1) ?: ""
@@ -670,7 +644,7 @@ class Mangago :
 
             val widthY = idx.floorDiv(cols)
             val sy = widthY * unitHeight
-            val sx = (idx - widthY * cols) * unitWidth
+            val sx = (idx - idx.floorDiv(cols) * cols) * unitWidth
 
             val srcRect = Rect(sx, sy, sx + unitWidth, sy + unitHeight)
             val dstRect = Rect(dx, dy, dx + unitWidth, dy + unitHeight)
