@@ -10,8 +10,8 @@ extension_metadata = {
         "name": "Tachiyomi: Mangago",
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
         "lang": "en",
-        "code": 31,
-        "version": "1.4.31",
+        "code": 32,
+        "version": "1.4.32",
         "nsfw": 1,
         "hasIcon": False,
         "hasBanner": False,
@@ -31,7 +31,7 @@ index_min_data = []
 # Generate exactly one entry per extension
 for pkg_name, meta in extension_metadata.items():
     data = meta.copy()
-    data["apk"] = f"apk/tachiyomi-{meta['lang']}.{meta['sources'][0]['name'].lower()}-v{meta['version']}.apk"
+    data["apk"] = f"tachiyomi-{meta['lang']}.{meta['sources'][0]['name'].lower()}-v{meta['version']}.apk"
     index_min_data.append(data)
 
 index_min_data.sort(key=lambda x: x["pkg"])
