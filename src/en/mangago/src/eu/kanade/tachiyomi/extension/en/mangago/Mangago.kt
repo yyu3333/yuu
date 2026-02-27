@@ -257,7 +257,10 @@ class Mangago :
         }
 
         if (pageURLTemplate.isBlank() || totalPages <= 0) {
-            throw Exception("Mangago: pageListParse failed - missing curl template or total_pages in ${document.location()}")
+            throw Exception(
+                "Mangago Error: Landed on wrong page ('${document.title()}' at ${document.location()}). " +
+                    "Try using 'Web View' to bypass captcha/login. [CURL: ${pageURLTemplate.isNotBlank()}]",
+            )
         }
 
         val baseUrl = document.location().toHttpUrl()
@@ -311,9 +314,11 @@ class Mangago :
         }
 
         // Gets the first array of image URLs from the base chapter URL
-        val firstUrls = runCatching { getChapterImageUrls(document) }.getOrElse {
-            val debugMsg = "Template: '$pageURLTemplate', Match: ${match != null}, Pattern: '$pattern', Source: '$sourcePath'"
-            throw Exception("${it.message} [$debugMsg]")
+        val firstUrls = try {
+            getChapterImageUrls(document)
+        } catch (e: Exception) {
+            val debugInfo = "MATCH: ${match != null} | TEMPLATE: $pageURLTemplate | SOURCE: $sourcePath"
+            throw Exception("Mangago Debug ($debugInfo) -> ${e.message}")
         }
         if (firstUrls.isEmpty()) {
             throw Exception("Mangago: pageListParse failed - decoded image url list is empty")
