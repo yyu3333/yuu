@@ -32,6 +32,7 @@ android {
         Integer kmkBaseVersionCode = theme == null ? 0 : theme.ext.find("kmkBaseVersionCode") ?: 0
         versionCode theme == null ? extVersionCode + kmkVersionCode : theme.baseVersionCode + overrideVersionCode + kmkBaseVersionCode + kmkVersionCode
         versionName "1.4.$versionCode"
+        String applicationIdSuffix = "${project.parent.name}.${project.name}"
         base {
             archivesName = "tachiyomi-$applicationIdSuffix-v$versionName"
         }
