@@ -60,9 +60,9 @@ android {
                 throw new GradleException("Signing key not found at ${keyFile.absolutePath}")
             }
             storeFile keyFile
-            storePassword System.getenv("KEY_STORE_PASSWORD")
-            keyAlias System.getenv("ALIAS")
-            keyPassword System.getenv("KEY_PASSWORD")
+            storePassword(System.getenv("KEY_STORE_PASSWORD") ?: "komikku123")
+            keyAlias(System.getenv("ALIAS") ?: "komikku")
+            keyPassword(System.getenv("KEY_PASSWORD") ?: "komikku123")
         }
     }
 
