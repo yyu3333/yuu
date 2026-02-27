@@ -269,8 +269,8 @@ class Mangago :
         val pattern = Regex.escape(cleanTemplate.replace("{page}", "{P}"))
             .replace("\\{P\\}", "(\\d+)")
             .let {
-                if (it.startsWith("uu/")) {
-                    it.replaceFirst(Regex("^uu/[^/]+/"), "uu/[^/]+/")
+                if (it.contains("uu/")) {
+                    it.replace(Regex("""uu/[^/]+/"""), "uu/[^/]+/")
                 } else {
                     it
                 }
@@ -430,7 +430,10 @@ class Mangago :
         val scripts = document.select("script")
         val imgsrcsScript = scripts.find { it.data().contains("imgsrcs =") }?.data()
             ?: scripts.find { it.data().contains("imgsrcs") }?.data()
-            ?: throw Exception("Mangago: getChapterImageUrls failed - could not find 'imgsrcs' script")
+            ?: throw Exception(
+                "Mangago: getChapterImageUrls failed - could not find 'imgsrcs' script " +
+                    "in '${document.title()}' at ${document.location()}",
+            )
 
         val imgsrcRaw = imgSrcsRegex.find(imgsrcsScript)?.groupValues?.get(1)
             ?: throw Exception("Mangago: getChapterImageUrls failed - could not extract imgsrcs data")
