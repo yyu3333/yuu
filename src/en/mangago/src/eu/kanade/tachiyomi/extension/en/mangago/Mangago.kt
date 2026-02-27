@@ -263,10 +263,18 @@ class Mangago :
         val sourcePath = baseUrl.encodedPath
 
         val cleanTemplate = pageURLTemplate.removePrefix("/")
-        val escapedTemplate = Regex.escape(cleanTemplate.replace("{page}", "__PAGE__"))
-            .replace("__PAGE__", "\\d+")
 
-        val curlPattern = runCatching { Regex(escapedTemplate) }.getOrNull()
+        // Generalize common Mangago legacy templates to match the actual active path
+        // e.g. uu/b/ -> uu/br_chapter.../ or uu/t/ -> uu/to_chapter.../
+        val pattern = Regex.escape(cleanTemplate.replace("{page}", "{P}"))
+            .replace("\\{P\\}", "(\\d+)")
+            .let {
+                if (it.startsWith("uu/b/")) it.replaceFirst("uu/b/", "uu/[^/]+/")
+                else if (it.startsWith("uu/t/")) it.replaceFirst("uu/t/", "uu/[^/]+/")
+                else it
+            }
+
+        val curlPattern = runCatching { Regex(pattern) }.getOrNull()
         val match = curlPattern?.find(sourcePath)
 
         val prefix = if (match != null) {
@@ -276,7 +284,17 @@ class Mangago :
         }
 
         val pageLinks = (1..totalPages).map { pageNumber ->
-            val relative = pageURLTemplate.replace("{page}", pageNumber.toString())
+            val relative = if (match != null && match.groups.size > 1) {
+                // Adapt the template using the active path segments
+                val start = match.range.first
+                val pgStart = match.groups[1]!!.range.first
+                val pgEnd = match.groups[1]!!.range.last
+                val end = match.range.last
+
+                sourcePath.substring(start, pgStart) + pageNumber.toString() + sourcePath.substring(pgEnd + 1, end + 1)
+            } else {
+                pageURLTemplate.replace("{page}", pageNumber.toString())
+            }
 
             val normalizedPath = when {
                 prefix.isBlank() -> relative
