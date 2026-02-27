@@ -1,47 +1,46 @@
 import json
 import sys
+import re
 from pathlib import Path
 from collections import OrderedDict
-import re
 
 # Default to current directory if no argument provided
 REPO_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
 print(f"Updating index in: {REPO_DIR.absolute()}")
 
-# Find the Mangago APK to determine the version
-apk_dir = REPO_DIR / "apk"
-mangago_apks = list(apk_dir.glob("tachiyomi-en.mangago-v1.4.*.apk"))
-if not mangago_apks:
-    # Fallback/Default if none found yet
-    current_version = "1.4.100"
-    current_code = 100
-    apk_name = "tachiyomi-en.mangago-v1.4.100.apk"
+# Dynamically find Mangago version from build.gradle
+# In CI, REPO_DIR is 'repo' branch, and 'master' is sibling
+build_gradle = REPO_DIR.parent / "master" / "src" / "en" / "mangago" / "build.gradle"
+version_code = 43
+if build_gradle.exists():
+    with build_gradle.open("r", encoding="utf-8") as f:
+        for line in f:
+            if "extVersionCode =" in line:
+                version_code = int(line.split("=")[1].strip())
+                break
 else:
-    # Sort by version number and pick highest
-    mangago_apks.sort(key=lambda p: [int(x) for x in re.findall(r"\d+", p.name)])
-    latest_apk = mangago_apks[-1]
-    apk_name = latest_apk.name
-    # Extract version from filename: tachiyomi-en.mangago-v1.4.102.apk
-    version_match = re.search(r"v(1\.4\.(\d+))", apk_name)
-    if version_match:
-        current_version = version_match.group(1)
-        current_code = int(version_match.group(2))
-    else:
-        current_version = "1.4.100"
-        current_code = 100
+    # Local dev path fallback
+    build_gradle = REPO_DIR / "src" / "en" / "mangago" / "build.gradle"
+    if build_gradle.exists():
+        with build_gradle.open("r", encoding="utf-8") as f:
+            for line in f:
+                if "extVersionCode =" in line:
+                    version_code = int(line.split("=")[1].strip())
+                    break
 
-print(f"Detected Mangago Version: {current_version} (Code: {current_code}) from {apk_name}")
+current_version = f"1.4.{version_code}"
+apk_name = f"tachiyomi-en.mangago-v{current_version}.apk"
+
+print(f"Detected Mangago Version: {current_version} (Code: {version_code})")
 
 # Fetch fingerprint from file generated during CI
 FINGERPRINT_FILE = REPO_DIR / "fingerprint.txt"
 if FINGERPRINT_FILE.exists():
     with FINGERPRINT_FILE.open("r", encoding="utf-8") as f:
         fingerprint = f.read().strip()
-    print(f"Found fingerprint.txt: {fingerprint}")
 else:
     # Use the hardcoded TRUE fingerprint confirmed via v42/v45/v50 logs
     fingerprint = "70ec4c637e8b5c5d1b5a3ca815b5cb8e608f275a3fae15326afd1b262b9adbff"
-    print(f"No fingerprint.txt found, using fallback: {fingerprint}")
 
 # Exact official metadata fields for Mangago
 extension_metadata = {
@@ -50,7 +49,7 @@ extension_metadata = {
         "pkg": "eu.kanade.tachiyomi.extension.en.mangago",
         "apk": apk_name,
         "lang": "en",
-        "code": current_code,
+        "code": version_code,
         "version": current_version,
         "nsfw": 1,
         "sources": [
