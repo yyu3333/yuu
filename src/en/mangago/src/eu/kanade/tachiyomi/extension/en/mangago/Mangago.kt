@@ -264,13 +264,12 @@ class Mangago :
 
         val cleanTemplate = pageURLTemplate.removePrefix("/")
 
-        // Generalize common Mangago legacy templates to match the actual active path
-        // e.g. uu/b/ -> uu/br_chapter.../ or uu/t/ -> uu/to_chapter.../
+        // Generalize any Mangago legacy template under /uu/ to match the actual active path
+        // e.g. uu/b/ -> uu/br_chapter.../ or uu/t/ -> uu/to_chapter.../ or uu/n/ -> uu/nml_chapter.../
         val pattern = Regex.escape(cleanTemplate.replace("{page}", "{P}"))
             .replace("\\{P\\}", "(\\d+)")
             .let {
-                if (it.startsWith("uu/b/")) it.replaceFirst("uu/b/", "uu/[^/]+/")
-                else if (it.startsWith("uu/t/")) it.replaceFirst("uu/t/", "uu/[^/]+/")
+                if (it.startsWith("uu/")) it.replaceFirst(Regex("^uu/[^/]+/"), "uu/[^/]+/")
                 else it
             }
 
