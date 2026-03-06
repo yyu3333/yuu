@@ -406,9 +406,21 @@ class Mangago :
         resolved
     }
 
+    // Maps old broken chapter URLs (stored in user library) to their correct new URLs
+    private val legacyChapterUrlMap = mapOf(
+        // The Evil Ring — old /chapter/ URL → new /read-manga/ URL
+        "https://www.mangago.me/chapter/71236/2204354/" to
+            "https://www.mangago.me/read-manga/the_evil_ring/uu/br_chapter-237943/pg-1/",
+        // Living as the Enemy Prince — old chapter ID → new chapter ID
+        "https://www.mangago.zone/chapter/67600/1806682/" to
+            "https://www.mangago.zone/chapter/67600/1600574/6/",
+    )
+
     override fun pageListRequest(chapter: SChapter): Request {
         if (chapter.url.startsWith("http")) {
-            return GET(chapter.url, headers)
+            val resolvedUrl = legacyChapterUrlMap.entries
+                .find { chapter.url.startsWith(it.key) }?.value ?: chapter.url
+            return GET(resolvedUrl, headers)
         }
         return super.pageListRequest(chapter)
     }
