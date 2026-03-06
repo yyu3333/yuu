@@ -406,20 +406,22 @@ class Mangago :
         resolved
     }
 
-    // Maps old broken chapter URLs (stored in user library) to their correct new URLs
-    private val legacyChapterUrlMap = mapOf(
-        // The Evil Ring — old /chapter/ URL → new /read-manga/ URL
-        "https://www.mangago.me/chapter/71236/2204354/" to
+    // Maps old broken chapter URLs (stored in user library) to their correct new URLs.
+    // Each entry is Pair(urlSubstring, newUrl) — if the chapter URL contains the substring, it gets redirected.
+    private val legacyChapterUrlFixes = listOf(
+        // The Evil Ring — old /chapter/71236/ URL → new /read-manga/ URL
+        "/chapter/71236/" to
             "https://www.mangago.me/read-manga/the_evil_ring/uu/br_chapter-237943/pg-1/",
-        // Living as the Enemy Prince — old chapter ID → new chapter ID
-        "https://www.mangago.zone/chapter/67600/1806682/" to
+        // Living as the Enemy Prince — any old chapter URL with manga ID 67600 → new chapter
+        "/chapter/67600/" to
             "https://www.mangago.zone/chapter/67600/1600574/6/",
     )
 
     override fun pageListRequest(chapter: SChapter): Request {
         if (chapter.url.startsWith("http")) {
-            val resolvedUrl = legacyChapterUrlMap.entries
-                .find { chapter.url.startsWith(it.key) }?.value ?: chapter.url
+            val resolvedUrl = legacyChapterUrlFixes
+                .find { (substring, _) -> chapter.url.contains(substring) }?.second
+                ?: chapter.url
             return GET(resolvedUrl, headers)
         }
         return super.pageListRequest(chapter)
