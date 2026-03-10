@@ -67,7 +67,7 @@ jobs:
 
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@0bdd871935719febd78681f197cd39af5b6e16a6 # v4
+        uses: gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c # v4
         with:
           cache-read-only: ${{ matrix.chunk != 0 }}
 
